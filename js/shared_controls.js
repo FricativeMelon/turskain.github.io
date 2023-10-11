@@ -765,7 +765,7 @@ function Side(format, terrain, weather, isGravity, isSR, spikes, isReflect, isLi
 	this.isMinimized = isMinimized;
 }
 
-var gen, genWasChanged, notation, pokedex, setdex, typeChart, moves, abilities, items, STATS, calcHP, calcStat;
+var gen, genWasChanged, notation, pokedex, setdex, typeChart, moves, abilities, items, STATS, calcHP, calcStat, blankSetHidden;
 
 $(".gen").change(function () {
 	gen = ~~$(this).val();
@@ -867,6 +867,12 @@ $(".gen").change(function () {
 	$(".set-selector").change();
 });
 
+$("#hide-blank-sets").change(function () {
+	blankSetHidden = this.checked;
+	$(".set-selector").val(getSetOptions()[gen < 3 ? 3 : 1].id);
+	$(".set-selector").change();
+});
+
 $(".notation").change(function () {
 	notation = $(this).val();
 });
@@ -933,12 +939,16 @@ function getSetOptions(sets) {
 				});
 			}
 		}
-		setOptions.push({
-			pokemon: pokeName,
-			set: "Blank Set",
-			text: pokeName + " (Blank Set)",
-			id: pokeName + " (Blank Set)"
-		});
+		if (!blankSetHidden)
+		{
+			setOptions.push({
+				pokemon: pokeName,
+				set: "Blank Set",
+				text: pokeName + " (Blank Set)",
+				id: pokeName + " (Blank Set)"
+			});
+		}
+
 	}
 	return setOptions;
 }
