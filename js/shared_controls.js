@@ -811,12 +811,13 @@ function Side(format, terrain, weather, isGravity, isSR, spikes, isReflect, isLi
 }
 
 var gen, genWasChanged, notation, pokedex, setdex, typeChart, moves, abilities, items, STATS, calcHP, calcStat;
-var blankSetHidden, recentSets;
+var blankSetHidden, recentSets, moveCalcHidden;
 
 $(".gen").change(function () {
 	gen = ~~$(this).val();
 	genWasChanged = true;
 	recentSets = [];
+	moveCalcHidden = false;
 	switch (gen) {
 	case 1:
 		pokedex = POKEDEX_RBY;
@@ -916,20 +917,25 @@ $(".gen").change(function () {
 
 $("#hide-blank-sets").change(function () {
 	blankSetHidden = this.checked;
-	$(".set-selector").val(getSetOptions()[gen < 3 ? 3 : 1].id);
-	$(".set-selector").change();
+	//$(".set-selector").val(getSetOptions()[gen < 3 ? 3 : 1].id);
+	//$(".set-selector").change();
 });
 
 $("#hide-move-calc").change(function () {
+	moveCalcHidden = this.checked;
 	if (this.checked)
 	{
-		//$(".main-result-group").hide(100, function () {});
+		$(".main-result-group").hide(100, function () {});
 		$(".move-result-group").hide(100, function () {});
+		$("#p1").hide(100, function () {});
+		$("#p2").width("630px");
 	}
 	else
 	{
-		//$(".main-result-group").show(100, function () {});
+		$(".main-result-group").show(100, function () {});
 		$(".move-result-group").show(100, function () {});
+		$("#p1").show(100, function () {});
+		$("#p2").width("290px");
 	}
 });
 
@@ -989,7 +995,9 @@ function getSetOptions(sets) {
 			isCommon: setdex[pokeName][setName]["isCommon"],
 			afterForty: setdex[pokeName][setName]["afterForty"],
 			isCustom: setdex[pokeName][setName].isCustomSet,
-			nickname: setdex[pokeName][setName].nickname || ""
+			nickname: setdex[pokeName][setName].nickname || "",
+			moves: setdex[pokeName][setName].moves || ["(No Move)", "(No Move)", "(No Move)", "(No Move)"],
+			item: setdex[pokeName][setName].item || "None"
 		});
 	}
 	for (var i = 0; i < pokeNames.length; i++) {
@@ -1013,7 +1021,9 @@ function getSetOptions(sets) {
 					isCommon: setdex[pokeName][setName]["isCommon"],
 					afterForty: setdex[pokeName][setName]["afterForty"],
 					isCustom: setdex[pokeName][setName].isCustomSet,
-					nickname: setdex[pokeName][setName].nickname || ""
+					nickname: setdex[pokeName][setName].nickname || "",
+					moves: setdex[pokeName][setName].moves || ["(No Move)", "(No Move)", "(No Move)", "(No Move)"],
+					item: setdex[pokeName][setName].item || "None"
 				});
 			}
 		}
@@ -1023,7 +1033,9 @@ function getSetOptions(sets) {
 				pokemon: pokeName,
 				set: "Blank Set",
 				text: pokeName + " (Blank Set)",
-				id: pokeName + " (Blank Set)"
+				id: pokeName + " (Blank Set)",
+				moves: ["(No Move)", "(No Move)", "(No Move)", "(No Move)"],
+				item: "None"
 			});
 		}
 
@@ -1116,10 +1128,37 @@ function getTerrainEffects() {
 	}
 }
 
+function pad(pad, str) {
+	if (typeof str === 'undefined') 
+		return pad;
+	return (pad + str + pad).substring(str.length / 2 + 1, str.length / 2 + 2 * pad.length);
+}
+
 function loadDefaultLists() {
 	$(".set-selector").select2({
 		formatResult: function (object) {
-			return object.set ? ("&nbsp;&nbsp;&nbsp;" + object.set) : ("<b>" + object.text + "</b>");
+			if (moveCalcHidden)
+			{
+				if (object.set)
+				{
+					var padding = Array(8).join('-');
+					var eles = [object.set.substring(0, object.set.indexOf("[")-1),
+								object.item, object.moves[0], object.moves[1], object.moves[2], object.moves[3]];
+					for (i=0; i < eles.length; i++)
+					{
+						eles[i] = pad(padding, eles[i], false);
+					}
+					return eles.join("|");
+					//return pad(padding, object.set.substring(0, object.set.indexOf("[")-1), false) + "|"; 
+					//`|<b>${object.item.padEnd(120, " ")}</b>|${object.moves[0].padEnd(12, " ")}|${object.moves[1].padEnd(12, " ")}` +
+					//`|${object.moves[2].padEnd(12, " ")}|${object.moves[3].padEnd(12, " ")}`);
+				}
+			}
+			else if (object.set)
+			{
+				return ("&nbsp;&nbsp;&nbsp;" + object.set);
+			}
+			return ("<b>" + object.text + "</b>");
 		},
 		query: function (query) {
 			var pageSize = 30;
@@ -1183,8 +1222,8 @@ function loadCustomList(id) {
 }
 
 $(document).ready(function () {
-	$("#gen7").prop("checked", true);
-	$("#gen7").change();
+	$("#gen3").prop("checked", true);
+	$("#gen3").change();
 	$("#percentage").prop("checked", true);
 	$("#percentage").change();
 	loadDefaultLists();
