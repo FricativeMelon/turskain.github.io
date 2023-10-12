@@ -932,7 +932,6 @@ function getSetOptions(sets) {
 	pokeNames.sort();
 	var setOptions = [];
 	var idNum = 0;
-	console.log(recentSets);
 	for (var i = recentSets.length - 1; i >= 0; i--) {
 		var fullSetName = recentSets[i];
 		pokeName = fullSetName.substring(0, fullSetName.indexOf(" ("));
