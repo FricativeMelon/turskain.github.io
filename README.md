@@ -1,7 +1,7 @@
 Battle Tree Damage Calculator
 =======================
 
-This is forked from Honko's official Pokémon Showdown damage calculator (http://pokemonshowdown.com/damagecalc/) by turskain.
+This is forked from Honko's official Pokémon Showdown damage calculator (http://pokemonshowdown.com/damagecalc/) by turskain, and then forked again by me, FricativeMelon!
 
 Some of the code for the changes made were adaptations from Trainer Tower's damage calculator (https://trainertower.com/damagecalc/) made by Jake White, and cant say's/LegoFigure11's damage calculator based off of it (https://cantsay.github.io). 
 
