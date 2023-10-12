@@ -64,7 +64,7 @@ function calculate() {
 				minHealthRecovered = Math.floor(p2.maxHP * p1.moves[i].percentHealed * 48 / p1.maxHP);
 				maxHealthRecovered = Math.floor(p2.maxHP * p1.moves[i].percentHealed * 48 / p1.maxHP);
 			}
-			recoveryText = ' (' + minHealthRecovered + ' - ' + maxHealthRecovered + notation + ' recovered)';
+			recoveryText = ' (' + minHealthRecovered + ' - ' + maxHealthRecovered + notation + ' heal)';
 		}
 		var recoilText = '';
 		if (typeof p1.moves[i].hasRecoil === 'number') {
@@ -79,7 +79,7 @@ function calculate() {
 				maxRecoilDamage = notation === '%' ? Math.floor(p2.curHP * p1.moves[i].hasRecoil * 10 / p1.maxHP) / 10 :
 					Math.floor(p2.curHP * p1.moves[i].hasRecoil * 0.48 / p1.maxHP);
 			}
-			recoilText = ' (' + minRecoilDamage + ' - ' + maxRecoilDamage + notation + ' recoil damage)';
+			recoilText = ' (' + minRecoilDamage + ' - ' + maxRecoilDamage + notation + ' recoil)';
 		} else if (p1.moves[i].hasRecoil === 'crash') {
 			var genMultiplier = gen === 2 ? 12.5 : gen >= 3 ? 50 : 1;
 			var gen4CrashDamage = Math.floor(p2.maxHP * 0.5 / p1.maxHP * 100);
@@ -94,15 +94,15 @@ function calculate() {
 					Math.floor(Math.min(p2.maxHP, p1.maxHP) * genMultiplier * 0.48);
 			}
 			recoilText = gen === 1 ? ' (1hp damage on miss)' :
-				gen === 2 ? (p2.type1 === "Ghost" || p2.type2 === "Ghost") ? ' (no crash damage on Ghost types)' : ' (' + minRecoilDamage + ' - ' + maxRecoilDamage + notation + ' crash damage on miss)' :
-					gen === 3 ? (p2.type1 === "Ghost" || p2.type2 === "Ghost") ? ' (no crash damage on Ghost types)' : ' (' + minRecoilDamage + ' - ' + maxRecoilDamage + notation + ' crash damage on miss)' :
-						gen === 4 ? (p2.type1 === "Ghost" || p2.type2 === "Ghost") ? ' (' + gen4CrashDamage + '% crash damage)' : ' (' + minRecoilDamage + ' - ' + maxRecoilDamage + notation + ' crash damage on miss)' :
+				gen === 2 ? (p2.type1 === "Ghost" || p2.type2 === "Ghost") ? ' (no crash)' : ' (' + minRecoilDamage + ' - ' + maxRecoilDamage + notation + ' crash miss)' :
+					gen === 3 ? (p2.type1 === "Ghost" || p2.type2 === "Ghost") ? ' (no crash)' : ' (' + minRecoilDamage + ' - ' + maxRecoilDamage + notation + ' crash miss)' :
+						gen === 4 ? (p2.type1 === "Ghost" || p2.type2 === "Ghost") ? ' (' + gen4CrashDamage + '% crash)' : ' (' + minRecoilDamage + ' - ' + maxRecoilDamage + notation + ' crash miss)' :
 							gen > 4 ? ' (50% crash damage)' :
 								'';
 		} else if (p1.moves[i].hasRecoil === 'Struggle') {
-			recoilText = ' (25% struggle damage)';
+			recoilText = ' (25% struggle)';
 		} else if (p1.moves[i].hasRecoil) {
-			recoilText = ' (50% recoil damage)';
+			recoilText = ' (50% recoil)';
 		}
 		$(resultLocations[0][i].move + " + label").text(p1.moves[i].name.replace("Hidden Power", "HP"));
 		$(resultLocations[0][i].damage).text(minDisplay + " - " + maxDisplay + notation + recoveryText + recoilText);
@@ -135,7 +135,7 @@ function calculate() {
 				minHealthRecovered = Math.floor(p1.maxHP * p2.moves[i].percentHealed * 48 / p2.maxHP);
 				maxHealthRecovered = Math.floor(p1.maxHP * p2.moves[i].percentHealed * 48 / p2.maxHP);
 			}
-			recoveryText = ' (' + minHealthRecovered + ' - ' + maxHealthRecovered + notation + ' recovered)';
+			recoveryText = ' (' + minHealthRecovered + ' - ' + maxHealthRecovered + notation + ' heal)';
 		}
 		var recoilText = '';
 		if (typeof p2.moves[i].hasRecoil === 'number') {
@@ -150,7 +150,7 @@ function calculate() {
 				maxRecoilDamage = notation === '%' ? Math.floor(Math.min(p1.maxHP, p2.moves[i].hasRecoil) * 10 / p2.maxHP) / 10 :
 					Math.floor(Math.min(p1.maxHP, p2.moves[i].hasRecoil) * 0.48 / p2.maxHP);
 			}
-			recoilText = ' (' + minRecoilDamage + ' - ' + maxRecoilDamage + notation + ' recoil damage)';
+			recoilText = ' (' + minRecoilDamage + ' - ' + maxRecoilDamage + notation + ' recoil)';
 		} else if (p2.moves[i].hasRecoil === 'crash') {
 			var genMultiplier = gen === 2 ? 12.5 : gen >= 3 ? 50 : 1;
 			var gen4CrashDamage = Math.floor(p2.maxHP * 0.5 / p1.maxHP * 100);
@@ -165,15 +165,15 @@ function calculate() {
 					Math.floor(Math.min(p1.maxHP, p2.maxHP) * genMultiplier * 0.48);
 			}
 			recoilText = gen === 1 ? ' (1hp damage on miss)' :
-				gen === 2 ? (p1.type1 === "Ghost" || p1.type2 === "Ghost") ? ' (no crash damage on Ghost types)' : ' (' + minRecoilDamage + ' - ' + maxRecoilDamage + notation + ' crash damage on miss)' :
-					gen === 3 ? (p1.type1 === "Ghost" || p1.type2 === "Ghost") ? ' (no crash damage on Ghost types)' : ' (' + minRecoilDamage + ' - ' + maxRecoilDamage + notation + ' crash damage on miss)' :
-						gen === 4 ? (p1.type1 === "Ghost" || p1.type2 === "Ghost") ? ' (' + gen4CrashDamage + '% crash damage)' : ' (' + minRecoilDamage + ' - ' + maxRecoilDamage + notation + ' crash damage on miss)' :
+				gen === 2 ? (p1.type1 === "Ghost" || p1.type2 === "Ghost") ? ' (no crash)' : ' (' + minRecoilDamage + ' - ' + maxRecoilDamage + notation + ' crash miss)' :
+					gen === 3 ? (p1.type1 === "Ghost" || p1.type2 === "Ghost") ? ' (no crash)' : ' (' + minRecoilDamage + ' - ' + maxRecoilDamage + notation + ' crash miss)' :
+						gen === 4 ? (p1.type1 === "Ghost" || p1.type2 === "Ghost") ? ' (' + gen4CrashDamage + '% crash)' : ' (' + minRecoilDamage + ' - ' + maxRecoilDamage + notation + ' crash damage on miss)' :
 							gen > 4 ? ' (50% crash damage)' :
 								'';
 		} else if (p2.moves[i].hasRecoil === 'Struggle') {
-			recoilText = ' (25% struggle damage)';
+			recoilText = ' (25% struggle)';
 		} else if (p2.moves[i].hasRecoil) {
-			recoilText = ' (50% recoil damage)';
+			recoilText = ' (50% recoil)';
 		}
 		var bestMove;
 		$(resultLocations[1][i].move + " + label").text(p2.moves[i].name.replace("Hidden Power", "HP"));
