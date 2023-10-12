@@ -819,6 +819,7 @@ $(".gen").change(function () {
 	genWasChanged = true;
 	recentSets = [];
 	moveCalcHidden = false;
+	blankSetHidden = true;
 	switch (gen) {
 	case 1:
 		pokedex = POKEDEX_RBY;
@@ -931,6 +932,12 @@ $("#hide-blank-sets").change(function () {
 });
 
 $("#hide-move-calc").change(function () {
+	a = $("#hide-blank-sets");
+	if (a.prop("checked") == false)
+	{
+		a.prop("checked", true);
+		a.change();
+	}
 	moveCalcHidden = this.checked;
 	if (this.checked)
 	{
@@ -953,7 +960,7 @@ $(".notation").change(function () {
 });
 
 function clearField() {
-	$("#doubles-format").prop("checked", true);
+	$("#doubles-format").prop("checked", false);
 	$("#clear").prop("checked", true);
 	$("#gscClear").prop("checked", true);
 	$("#gravity").prop("checked", false);
@@ -1011,7 +1018,7 @@ function getSetOptions(sets) {
 	}
 	for (var i = 0; i < pokeNames.length; i++) {
 		var pokeName = pokeNames[i];
-		if (false)
+		if (!blankSetHidden)
 		{
 			setOptions.push({
 				pokemon: pokeName,
@@ -1255,4 +1262,19 @@ $(document).ready(function () {
 	}
 
     $(".terrain-trigger").bind("change keyup", getTerrainEffects);
+	
+	/*var res = {};
+	for(var propertyName in SETDEX_ADV)
+	{
+		var poke = SETDEX_ADV[propertyName];
+		for(var setName in poke)
+		{
+			var item = poke[setName].item;
+			if (item == undefined)
+			{
+				console.log(setName);
+			}
+		}
+	};
+	console.log(res)*/
 });
