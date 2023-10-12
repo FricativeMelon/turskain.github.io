@@ -920,6 +920,19 @@ $("#hide-blank-sets").change(function () {
 	$(".set-selector").change();
 });
 
+$("#hide-move-calc").change(function () {
+	if (this.checked)
+	{
+		//$(".main-result-group").hide(100, function () {});
+		$(".move-result-group").hide(100, function () {});
+	}
+	else
+	{
+		//$(".main-result-group").show(100, function () {});
+		$(".move-result-group").show(100, function () {});
+	}
+});
+
 $(".notation").change(function () {
 	notation = $(this).val();
 });
