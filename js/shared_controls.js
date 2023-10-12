@@ -533,7 +533,8 @@ function showFormes(formeObj, setName, pokemonName, pokemon) {
 }
 
 function setSelectValueIfValid(select, value, fallback) {
-	select.val(select.children('option[value="' + value + '"]').length !== 0 ? value : fallback);
+	a = select.children('option[value="' + value + '"]');
+	select.val(a.length !== 0 ? value : fallback);
 }
 
 $(".forme").change(function () {
@@ -911,8 +912,16 @@ $(".gen").change(function () {
 	var itemOptions = getSelectOptions(items, true);
 	$("select.item").find("option").remove().end().append("<option value=\"\">(none)</option>" + itemOptions);
 
-	$(".set-selector").val(getSetOptions()[gen < 3 ? 3 : 1].id);
-	$(".set-selector").change();
+	setO = getSetOptions();
+	for (i = 0; i < 4; i++)
+	{
+		if (setO[i].set)
+		{
+			$(".set-selector").val(setO[i].id);
+			$(".set-selector").change();
+			break;
+		}
+	}
 });
 
 $("#hide-blank-sets").change(function () {
@@ -928,14 +937,14 @@ $("#hide-move-calc").change(function () {
 		$(".main-result-group").hide(100, function () {});
 		$(".move-result-group").hide(100, function () {});
 		$("#p1").hide(100, function () {});
-		$("#p2").width("630px");
+		$("#p2").width("660px");
 	}
 	else
 	{
 		$(".main-result-group").show(100, function () {});
 		$(".move-result-group").show(100, function () {});
 		$("#p1").show(100, function () {});
-		$("#p2").width("290px");
+		$("#p2").width("300px");
 	}
 });
 
@@ -1002,7 +1011,7 @@ function getSetOptions(sets) {
 	}
 	for (var i = 0; i < pokeNames.length; i++) {
 		var pokeName = pokeNames[i];
-		if (!blankSetHidden)
+		if (false)
 		{
 			setOptions.push({
 				pokemon: pokeName,
@@ -1234,7 +1243,16 @@ $(document).ready(function () {
 			return text.toUpperCase().indexOf(term.toUpperCase()) === 0 || text.toUpperCase().indexOf(" " + term.toUpperCase()) >= 0;
 		}
 	});
-	$(".set-selector").val(getSetOptions()[gen < 3 ? 3 : 1].id);
-	$(".set-selector").change();
-    	$(".terrain-trigger").bind("change keyup", getTerrainEffects);
+	setO = getSetOptions();
+	for (i = 0; i < 4; i++)
+	{
+		if (setO[i].set)
+		{
+			$(".set-selector").val(setO[i].id);
+			$(".set-selector").change();
+			break;
+		}
+	}
+
+    $(".terrain-trigger").bind("change keyup", getTerrainEffects);
 });

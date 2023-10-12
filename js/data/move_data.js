@@ -42,6 +42,11 @@ var MOVES_RBY = {
         type: 'Normal',
         pp: 20
     },
+	'Bide': {
+        bp: 0,
+        type: 'Normal',
+        pp: 10
+    },
     'Blizzard': {
         bp: 120,
         type: 'Ice',
@@ -399,6 +404,18 @@ var MOVES_RBY = {
         isMultiHit: true,
         pp: 20
     },
+	'Poison Sting': {
+        bp: 15,
+        type: 'Poison',
+        pp: 35
+    },
+	'Psybeam': {
+        bp: 65,
+        type: 'Psychic',
+        category: 'Special',
+        hasSecondaryEffect: true,
+        pp: 20
+    },
     'Psychic': {
         bp: 90,
         type: 'Psychic',
@@ -461,7 +478,7 @@ var MOVES_RBY = {
         category: 'Physical',
         pp: 15
     },
-    'Sand Attack': {
+    'Sand-Attack': {
         bp: 0,
         type: 'Ground',
         pp: 15
@@ -530,6 +547,11 @@ var MOVES_RBY = {
         bp: 0,
         type: 'Grass',
         pp: 15
+    },
+	'String Shot': {
+        bp: 0,
+        type: 'Bug',
+        pp: 40
     },
     'Stun Spore': {
         bp: 0,
@@ -643,6 +665,12 @@ var MOVES_RBY = {
         category: 'Physical',
         makesContact: true,
         pp: 15
+    },
+	'Water Gun': {
+        bp: 40,
+        type: 'Water',
+		category: 'Special',
+        pp: 25
     },
     'Wing Attack': {
         bp: 35,
@@ -809,6 +837,13 @@ var MOVES_GSC = $.extend(true, {}, MOVES_RBY, {
 	'Frustration': {
 		bp: 102,
 		type: 'Normal',
+		category: 'Physical',
+		makesContact: true,
+        pp: 20
+	},
+	'Fury Cutter': {
+		bp: 10,
+		type: 'Bug',
 		category: 'Physical',
 		makesContact: true,
         pp: 20
@@ -1159,6 +1194,16 @@ var MOVES_GSC = $.extend(true, {}, MOVES_RBY, {
 		type: 'Ground',
         pp: 20
 	},
+	'Spider Web': {
+		bp: 0,
+		type: 'Bug',
+        pp: 10
+	},
+	'Spite': {
+        bp: 0,
+        type: 'Ghost',
+        pp: 10
+    },
 	'Steel Wing': {
 		bp: 70,
 		type: 'Steel',
@@ -1230,10 +1275,258 @@ var MOVES_GSC = $.extend(true, {}, MOVES_RBY, {
 	}
 });
 
-delete MOVES_GSC['Acid'];
-delete MOVES_GSC['Mega Drain'];
+//delete MOVES_GSC['Acid'];
+MOVES_GSC['Acid'].hasSecondaryEffect = true;
+//delete MOVES_GSC['Mega Drain'];
 
 var MOVES_ADV = $.extend(true, {}, MOVES_GSC, {
+	'Absorb': {
+		bp: 20,
+		type: 'Grass',
+		category: 'Special',
+		givesHealth: true,
+        percentHealed: 0.5,
+		pp: 25
+	},
+	'Confusion': {
+		bp: 50,
+		type: 'Psychic',
+	    category: 'Special',
+		pp: 25
+	},
+	'Double Slap': {
+		bp: 15,
+		type: 'Normal',
+		category: 'Physical',
+        makesContact: true,
+        isMultiHit: true,
+		pp: 10
+	},
+	'Dragon Rage': {
+		bp: 0,
+		type: 'Dragon',
+		category: 'Special',
+		pp: 10
+	},
+	'Ember': {
+		bp: 40,
+		type: 'Fire',
+		category: 'Special',
+		pp: 25
+	},
+	'Fury Attack': {
+		bp: 15,
+		type: 'Normal',
+		category: 'Physical',
+		pp: 20
+	},
+	'Growth': {
+		bp: 0,
+		type: 'Normal',
+		pp: 20
+	},
+	'Present': {
+		bp: 0,
+		type: 'Normal',
+		pp: 15
+	},
+	'Harden': {
+		bp: 0,
+		type: 'Normal',
+		pp: 30
+	},
+	'Howl': {
+		bp: 0,
+		type: 'Normal',
+		pp: 40
+	},
+	'Leer': {
+		bp: 0,
+		type: 'Normal',
+		pp: 30
+	},
+	'Magnitude': {
+		bp: 0,
+		type: 'Ground',
+		category: 'Physical',
+		pp: 30
+	},
+	'Meditate': {
+		bp: 0,
+		type: 'Psychic',
+		pp: 40
+	},
+	'Mega Punch': {
+		bp: 20,
+		type: 'Normal',
+		category: 'Physical',
+		pp: 80
+	},
+	'Mud Sport': {
+		bp: 0,
+		type: 'Normal',
+		pp: 15
+	},
+	'Petal Dance': {
+		bp: 120,
+		type: 'Grass',
+		category: 'Special',
+		pp: 10
+	},
+	'Octazooka': {
+		bp: 65,
+		type: 'Water',
+		category: 'Special',
+		hasSecondaryEffect: true,
+		pp: 15
+	},
+	'Comet Punch': {
+		bp: 18,
+		type: 'Normal',
+		category: 'Physical',
+        makesContact: true,
+        isMultiHit: true,
+		pp: 15
+	},
+	'Triple Kick': {
+		bp: 10,
+		type: 'Fighting',
+		category: 'Physical',
+        makesContact: true,
+        isMultiHit: true,
+		pp: 10
+	},
+	'Scratch': {
+		bp: 40,
+		type: 'Normal',
+		category: 'Physical',
+		pp: 35
+	},
+	'Outrage': {
+		bp: 120,
+		type: 'Dragon',
+		category: 'Special',
+		pp: 10
+	},
+	'Psywave': {
+		bp: 0,
+		type: 'Dragon',
+		category: 'Special',
+		pp: 15
+	},
+	'Karate Chop': {
+		bp: 50,
+		type: 'Fighting',
+		category: 'Physical',
+		pp: 25
+	},
+	'Rolling Kick': {
+		bp: 60,
+		type: 'Fighting',
+		category: 'Physical',
+		pp: 15
+	},
+	'Selfdestruct': {
+		bp: 200,
+		type: 'Normal',
+		category: 'Physical',
+		pp: 5
+	},
+	'Skill Swap': {
+		bp: 0,
+		type: 'Psychic',
+		pp: 10
+	},
+	'Transform': {
+		bp: 0,
+		type: 'Normal',
+		pp: 10
+	},
+	'Slam': {
+		bp: 80,
+		type: 'Normal',
+		category: 'Physical',
+		pp: 20
+	},
+	'Smelling Salt': {
+		bp: 70,
+		type: 'Normal',
+		pp: 10
+	},
+	'Smog': {
+		bp: 30,
+		type: 'Normal',
+		hasSecondaryEffect: true,
+		pp: 20
+	},
+	'Smoke Screen': {
+		bp: 0,
+		type: 'Normal',
+		pp: 20
+	},
+	'Softboiled': {
+		bp: 0,
+		type: 'Normal',
+		pp: 5
+	},
+	'Sonic Boom': {
+		bp: 0,
+		type: 'Normal',
+		pp: 20
+	},
+	'Spike Cannon': {
+		bp: 20,
+		type: 'Normal',
+		category: 'Physical',
+        makesContact: true,
+        isMultiHit: true,
+		pp: 15
+	},
+	'Spit Up': {
+		bp: 0,
+		type: 'Normal',
+		category: 'Physical',
+		pp: 10
+	},
+	'Stomp': {
+		bp: 65,
+		type: 'Normal',
+		category: 'Physical',
+		pp: 20
+	},
+	'Strength': {
+		bp: 80,
+		type: 'Normal',
+		category: 'Physical',
+		pp: 15
+	},
+	'Supersonic': {
+		bp: 0,
+		type: 'Normal',
+		pp: 20
+	},
+	'Sweet Scent': {
+		bp: 0,
+		type: 'Normal',
+		pp: 20
+	},
+	'Take Down': {
+		bp: 90,
+		type: 'Normal',
+		category: 'Physical',
+		pp: 20
+	},
+	'Vice Grip': {
+		bp: 55,
+		type: 'Normal',
+		category: 'Physical',
+		pp: 30
+	},
+	'Withdraw': {
+		bp: 0,
+		type: 'Water',
+		pp: 40
+	},
 	'Aerial Ace': {
 		bp: 60,
 		type: 'Flying',
@@ -1247,6 +1540,11 @@ var MOVES_ADV = $.extend(true, {}, MOVES_GSC, {
 		category: 'Special',
 		isSpread: true,
         pp: 25
+	},
+	'Assist': {
+		bp: 0,
+		type: 'Normal',
+        pp: 20
 	},
 	'Astonish': {
 		bp: 30,
@@ -1569,6 +1867,19 @@ var MOVES_ADV = $.extend(true, {}, MOVES_GSC, {
 		makesContact: true,
 		hasSecondaryEffect: true,
 		isPunch: true,
+        pp: 10
+	},
+	'Mimic': {
+		bp: 0,
+		type: 'Normal',
+		category: 'Status',
+		makesContact: true,
+        pp: 10
+	},
+	'Metronome': {
+		bp: 0,
+		type: 'Normal',
+		category: 'Status',
         pp: 10
 	},
 	'Mist Ball': {
