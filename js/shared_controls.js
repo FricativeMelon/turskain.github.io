@@ -364,6 +364,19 @@ $(".set-selector").change(function () {
 	setName = fullSetName.substring(fullSetName.indexOf("(") + 1, fullSetName.lastIndexOf(")"));
 	var pokemon = pokedex[pokemonName];
 	if (pokemon) {
+		if (pokemonName in setdex && setName in setdex[pokemonName])
+		{
+			var found = recentSets.indexOf(fullSetName);
+			if (found != -1)
+			{
+				recentSets.splice(found, 1);
+			}
+			else if (recentSets.length == 10)
+			{
+				recentSets.splice(0, 1);
+			}
+			recentSets.push(fullSetName);
+		}
 		var pokeObj = $(this).closest(".poke-info");
 		if (stickyMoves.getSelectedSide() === pokeObj.prop("id")) {
 			stickyMoves.clearStickyMove();
@@ -765,11 +778,13 @@ function Side(format, terrain, weather, isGravity, isSR, spikes, isReflect, isLi
 	this.isMinimized = isMinimized;
 }
 
-var gen, genWasChanged, notation, pokedex, setdex, typeChart, moves, abilities, items, STATS, calcHP, calcStat, blankSetHidden;
+var gen, genWasChanged, notation, pokedex, setdex, typeChart, moves, abilities, items, STATS, calcHP, calcStat;
+var blankSetHidden, recentSets;
 
 $(".gen").change(function () {
 	gen = ~~$(this).val();
 	genWasChanged = true;
+	recentSets = [];
 	switch (gen) {
 	case 1:
 		pokedex = POKEDEX_RBY;
@@ -917,12 +932,31 @@ function getSetOptions(sets) {
 	pokeNames.sort();
 	var setOptions = [];
 	var idNum = 0;
-	for (var i = 0; i < pokeNames.length; i++) {
-		var pokeName = pokeNames[i];
+	console.log(recentSets);
+	for (var i = recentSets.length - 1; i >= 0; i--) {
+		var fullSetName = recentSets[i];
+		pokeName = fullSetName.substring(0, fullSetName.indexOf(" ("));
+		setName = fullSetName.substring(fullSetName.indexOf("(") + 1, fullSetName.lastIndexOf(")"));
 		setOptions.push({
 			pokemon: pokeName,
-			text: pokeName
+			set: setName,
+			text: pokeName + " (" + setName + ")",
+			id: pokeName + " (" + setName + ")",
+			isCommon: setdex[pokeName][setName]["isCommon"],
+			afterForty: setdex[pokeName][setName]["afterForty"],
+			isCustom: setdex[pokeName][setName].isCustomSet,
+			nickname: setdex[pokeName][setName].nickname || ""
 		});
+	}
+	for (var i = 0; i < pokeNames.length; i++) {
+		var pokeName = pokeNames[i];
+		if (!blankSetHidden)
+		{
+			setOptions.push({
+				pokemon: pokeName,
+				text: pokeName
+			});
+		}
 		if (pokeName in setdex) {
 			var setNames = Object.keys(setdex[pokeName]);
 			for (var j = 0; j < setNames.length; j++) {
