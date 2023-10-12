@@ -356,6 +356,38 @@ $(".item").change(function () {
 	}
 });
 
+$(".p2m1").change(function () {
+	$("#notes-pp1").prop("title", $(this).val());
+});
+
+$(".move1").change(function () {
+	$("#notes-pp1").prop("title", $(".p2m1").val());
+});
+
+$(".p2m2").change(function () {
+	$("#notes-pp2").prop("title", $(this).val());
+});
+
+$(".move2").change(function () {
+	$("#notes-pp2").prop("title", $(".p2m2").val());
+});
+
+$(".p2m3").change(function () {
+	$("#notes-pp3").prop("title", $(this).val());
+});
+
+$(".move3").change(function () {
+	$("#notes-pp3").prop("title", $(".p2m3").val());
+});
+
+$(".p2m4").change(function () {
+	$("#notes-pp4").prop("title", $(this).val());
+});
+
+$(".move4").change(function () {
+	$("#notes-pp4").prop("title", $(".p2m4").val());
+});
+
 // auto-update set details on select
 $(".set-selector").change(function () {
 	var fullSetName = $(this).val();
