@@ -1026,7 +1026,7 @@ function isPokeInRound(pokemon, set, round)
 	var setCount = Object.keys(setdex[pokemon]).length;
 	if (legendPokeAll.indexOf(pokemon) != -1)
 	{
-		if (legendPoke1.indexOf(pokemon) != -1 && (setNum == "5" || setNum == "6"))
+		if (legendPoke1.indexOf(pokemon) != -1 && (setNum == "5" || setNum == "6" || round < 8))
 			return false;
 		if (legendPoke2.indexOf(pokemon) != -1 && round < 8)
 			return false;
@@ -1053,6 +1053,32 @@ function isPokeInRound(pokemon, set, round)
 		default:
 			return setCount > 2 && setNum != "s";
 	}
+}
+
+function getPhraseCount(pokemon, set, phraseHint)
+{		
+	var phr1 = 0;
+	if (phraseHint != 0)
+	{			
+		for (i=0; i < 4; i++)
+		{
+			if (PHRASE_CATEGORIES[phraseHint-1].indexOf(setdex[pokemon][set].moves[i]) != -1)
+			{
+				phr1 += 1;
+			}
+		}
+	}
+	else
+	{			
+		for (i=0; i < 4; i++)
+		{
+			if (PHRASE_CATEGORIES[7].indexOf(setdex[pokemon][set].moves[i]) == -1)
+			{
+				phr1 += 1;
+			}
+		}
+	}
+	return phr1;
 }
 
 function getSetOptions(sets) {
@@ -1105,6 +1131,7 @@ function getSetOptions(sets) {
 	{
 		var typeHint = $("select.type-hint option:selected").val();
 		var roundHint = $("#hint1").val();
+		var phraseHint = $("#hint3").val();
 		for (var i = 0; i < pokeNames.length; i++) {
 			var pokeName = pokeNames[i];
 			if (pokeName in setdex) {
@@ -1119,11 +1146,18 @@ function getSetOptions(sets) {
 			}
 		}
 		setOptions.sort(function (a, b) {
+
 			var p1 = (pokedex[a.pokemon].t1 == typeHint) || (pokedex[a.pokemon].t2 == typeHint);
 			var p2 = (pokedex[b.pokemon].t1 == typeHint) || (pokedex[b.pokemon].t2 == typeHint);
 			if (p1 && !p2)
 				return -1;
 			if (!p1 && p2)
+				return 1;
+			p1 = getPhraseCount(a.pokemon, a.set, phraseHint);
+			p2 = getPhraseCount(b.pokemon, b.set, phraseHint);
+			if (p1 > p2)
+				return -1;
+			if (p1 < p2)
 				return 1;
 			return 0;
 		});
@@ -1230,12 +1264,34 @@ function loadDefaultLists() {
 			{
 				if (object.set)
 				{
+					var phraseHint = $("#hint3").val();
 					var padding = Array(8).join('-');
 					var eles = [object.set.substring(0, object.set.indexOf("[")-1),
 								object.item, object.moves[0], object.moves[1], object.moves[2], object.moves[3]];
 					for (i=0; i < eles.length; i++)
 					{
 						eles[i] = pad(padding, eles[i], false);
+					}
+					if (phraseHint != 0)
+					{			
+						for (i=0; i < 4; i++)
+						{
+							if (PHRASE_CATEGORIES[phraseHint-1].indexOf(object.moves[i]) != -1)
+							{
+									eles[i+2] = `<span style="color:#FF0000">${eles[i+2]}</span>`
+							}
+						}
+					}
+					else
+					{			
+						for (i=0; i < 4; i++)
+						{
+							console.log(PHRASE_CATEGORIES[7]);
+							if (PHRASE_CATEGORIES[7].indexOf(object.moves[i]) != -1)
+							{
+									eles[i+2] = `<span style="color:#FF0000">${eles[i+2]}</span>`
+							}
+						}
 					}
 					return eles.join("|");
 					//return pad(padding, object.set.substring(0, object.set.indexOf("[")-1), false) + "|"; 

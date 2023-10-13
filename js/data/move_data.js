@@ -1,3 +1,23 @@
+var PHRASE_CATEGORIES = [
+	["Acid Armor", "Agility", "Amnesia", "Barrier", "Belly Drum", "Bulk Up", "Calm Mind", "Charge", "Conversion",
+"Conversion 2", "Cosmic Power", "Defense Curl", "Double Team", "Dragon Dance", "Focus Energy", "Growth",
+"Harden", "Howl", "Iron Defense", "Meditate", "Minimize", "Psych Up", "Sharpen", "Snatch", "Swords Dance",
+"Tail Glow", "Withdraw"],
+	["Attract", "Block", "Confuse Ray", "Disable", "Encore", "Flatter", "Glare", "GrassWhistle", "Hypnosis", "Imprison",
+"Leech Seed", "Lovely Kiss", "Mean Look", "Poison Gas", "PoisonPowder", "Sing", "Sleep Powder", "Snatch",
+"Spider Web", "Spikes", "Spore", "Stun Spore", "Supersonic", "Swagger", "Sweet Kiss", "Taunt", "Teeter Dance",
+"Thunder Wave", "Torment", "Toxic", "Yawn", "Will-O-Wisp"],
+	["Aromatherapy", "Baton Pass", "Detect", "Endure", "Haze", "Heal Bell", "Ingrain", "Light Screen", "Magic Coat","Milk Drink", "Mist", "Moonlight", "Morning Sun", "Mud Sport", "Protect", "Recover", "Reflect", "Rest", "Safeguard","Slack Off", "Softboiled", "Swallow", "Synthesis", "Recycle", "Refresh", "Water Sport", "Wish"],
+	["Bide", "Blast Burn", "Counter", "Destiny Bond", "Double-Edge", "Explosion", "Facade", "Fissure", "Flail","Focus Punch", "Frenzy Plant", "Grudge", "Guillotine", "Horn Drill", "Hydro Cannon", "Hyper Beam", "Memento","Mirror Coat", "Overheat", "Pain Split", "Perish Song", "Psycho Boost", "Reversal", "Selfdestruct", "Sky Attack",
+"Volt Tackle"],
+	["Charm", "Cotton Spore", "Fake Tears", "FeatherDance", "Flash", "Growl", "Kinesis", "Knock Off", "Leer","Metal Sound", "Sand-Attack", "Scary Face", "Screech", "SmokeScreen", "Spite", "String Shot", "Sweet Scent","Tail Whip", "Tickle"],
+	["Assist", "Camouflage", "Curse", "Follow Me", "Metronome", "Mimic", "Mirror Move", "Present", "Role Play","Sketch", "Skill Swap", "Substitute", "Transform", "Trick"],
+	["Hail", "Rain Dance", "Sandstorm", "Sunny Day", "Weather Ball"]
+]
+
+PHRASE_CATEGORIES.push(PHRASE_CATEGORIES[0].concat(PHRASE_CATEGORIES[1], PHRASE_CATEGORIES[2], PHRASE_CATEGORIES[3], PHRASE_CATEGORIES[4],
+PHRASE_CATEGORIES[5], PHRASE_CATEGORIES[6]));
+
 var MOVES_RBY = {
     '(No Move)': {
         bp: 0,
