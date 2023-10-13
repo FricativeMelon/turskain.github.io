@@ -1013,6 +1013,48 @@ function fullSetOption(pokeName, setName)
 	return res;
 }
 
+var legendPoke1 = ["Articuno", "Zapdos", "Moltres", "Raikou", "Entei", "Suicune"];
+var legendPoke2 = ["Registeel", "Regice", "Regirock", "Latios", "Latias"];
+var legendPoke3 = ["Tyranitar", "Dragonite"];
+var legendPokeAll = legendPoke1.concat(legendPoke2, legendPoke3);
+
+
+function isPokeInRound(pokemon, set, round)
+{
+	round = parseInt(round);
+	var setNum = set[set.indexOf("[")-2];
+	var setCount = Object.keys(setdex[pokemon]).length;
+	if (legendPokeAll.indexOf(pokemon) != -1)
+	{
+		if (legendPoke1.indexOf(pokemon) != -1 && (setNum == "5" || setNum == "6"))
+			return false;
+		if (legendPoke2.indexOf(pokemon) != -1 && round < 8)
+			return false;
+		if (legendPoke3.indexOf(pokemon) != -1)
+			return false;
+	}
+
+	switch (round)
+	{
+		case 1:
+			return setCount <= 2 && setNum == "1";
+		case 2:
+			return setCount <= 2 && setNum == "1";
+		case 3:
+			return setCount == 2 && setNum == "2";
+		case 4:
+			return setCount > 2 && setNum == "1";
+		case 5:
+			return setCount > 2 && setNum == "2";
+		case 6:
+			return setCount > 2 && setNum == "3";
+		case 7:
+			return setCount > 2 && setNum == "4";
+		default:
+			return setCount > 2 && setNum != "s";
+	}
+}
+
 function getSetOptions(sets) {
 	var setsHolder = sets;
 	if (setsHolder === undefined) {
@@ -1062,13 +1104,17 @@ function getSetOptions(sets) {
 	else 
 	{
 		var typeHint = $("select.type-hint option:selected").val();
+		var roundHint = $("#hint1").val();
 		for (var i = 0; i < pokeNames.length; i++) {
 			var pokeName = pokeNames[i];
 			if (pokeName in setdex) {
 				var setNames = Object.keys(setdex[pokeName]);
 				for (var j = 0; j < setNames.length; j++) {
 					var setName = setNames[j];
-					setOptions.push(fullSetOption(pokeName, setName));
+					if (isPokeInRound(pokeName, setName, roundHint))
+					{
+						setOptions.push(fullSetOption(pokeName, setName));
+					}
 				}
 			}
 		}
