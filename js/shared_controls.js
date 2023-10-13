@@ -912,6 +912,10 @@ $(".gen").change(function () {
 	$("select.ability").find("option").remove().end().append("<option value=\"\">(other)</option>" + abilityOptions);
 	var itemOptions = getSelectOptions(items, true);
 	$("select.item").find("option").remove().end().append("<option value=\"\">(none)</option>" + itemOptions);
+	var typeHintList = Object.keys(typeChart);
+	typeHintList[0] = "No hint";
+	var typeHintOptions = getSelectOptions(typeHintList);
+	$("select.type-hint").find("option").remove().end().append("<option value=\"\">(N/A)</option>" + typeHintOptions);
 
 	setO = getSetOptions();
 	for (i = 0; i < 4; i++)
@@ -943,6 +947,7 @@ $("#hide-move-calc").change(function () {
 	{
 		$(".main-result-group").hide(100, function () {});
 		$(".move-result-group").hide(100, function () {});
+		$(".spreadsheet-sorters").show(100, function () {});
 		$("#p1").hide(100, function () {});
 		$("#p2").width("660px");
 	}
@@ -950,6 +955,7 @@ $("#hide-move-calc").change(function () {
 	{
 		$(".main-result-group").show(100, function () {});
 		$(".move-result-group").show(100, function () {});
+		$(".spreadsheet-sorters").hide(100, function () {});
 		$("#p1").show(100, function () {});
 		$("#p2").width("300px");
 	}
@@ -990,6 +996,23 @@ function clearField() {
 	$("#minimizeR").prop("checked", false);
 }
 
+function fullSetOption(pokeName, setName)
+{
+	var res = {
+		pokemon: pokeName,
+		set: setName,
+		text: pokeName + " (" + setName + ")",
+		id: pokeName + " (" + setName + ")",
+		isCommon: setdex[pokeName][setName]["isCommon"],
+		afterForty: setdex[pokeName][setName]["afterForty"],
+		isCustom: setdex[pokeName][setName].isCustomSet,
+		nickname: setdex[pokeName][setName].nickname || "",
+		moves: setdex[pokeName][setName].moves || ["(No Move)", "(No Move)", "(No Move)", "(No Move)"],
+		item: setdex[pokeName][setName].item || "None"
+	};
+	return res;
+}
+
 function getSetOptions(sets) {
 	var setsHolder = sets;
 	if (setsHolder === undefined) {
@@ -999,63 +1022,67 @@ function getSetOptions(sets) {
 	pokeNames.sort();
 	var setOptions = [];
 	var idNum = 0;
-	for (var i = recentSets.length - 1; i >= 0; i--) {
-		var fullSetName = recentSets[i];
-		pokeName = fullSetName.substring(0, fullSetName.indexOf(" ("));
-		setName = fullSetName.substring(fullSetName.indexOf("(") + 1, fullSetName.lastIndexOf(")"));
-		setOptions.push({
-			pokemon: pokeName,
-			set: setName,
-			text: pokeName + " (" + setName + ")",
-			id: pokeName + " (" + setName + ")",
-			isCommon: setdex[pokeName][setName]["isCommon"],
-			afterForty: setdex[pokeName][setName]["afterForty"],
-			isCustom: setdex[pokeName][setName].isCustomSet,
-			nickname: setdex[pokeName][setName].nickname || "",
-			moves: setdex[pokeName][setName].moves || ["(No Move)", "(No Move)", "(No Move)", "(No Move)"],
-			item: setdex[pokeName][setName].item || "None"
-		});
-	}
-	for (var i = 0; i < pokeNames.length; i++) {
-		var pokeName = pokeNames[i];
-		if (!blankSetHidden)
-		{
-			setOptions.push({
-				pokemon: pokeName,
-				text: pokeName
-			});
+	if (!moveCalcHidden)
+	{
+		for (var i = recentSets.length - 1; i >= 0; i--) {
+			var fullSetName = recentSets[i];
+			pokeName = fullSetName.substring(0, fullSetName.indexOf(" ("));
+			setName = fullSetName.substring(fullSetName.indexOf("(") + 1, fullSetName.lastIndexOf(")"));
+			setOptions.push(fullSetOption(pokeName, setName));
 		}
-		if (pokeName in setdex) {
-			var setNames = Object.keys(setdex[pokeName]);
-			for (var j = 0; j < setNames.length; j++) {
-				var setName = setNames[j];
+		for (var i = 0; i < pokeNames.length; i++) {
+			var pokeName = pokeNames[i];
+			if (!blankSetHidden)
+			{
 				setOptions.push({
 					pokemon: pokeName,
-					set: setName,
-					text: pokeName + " (" + setName + ")",
-					id: pokeName + " (" + setName + ")",
-					isCommon: setdex[pokeName][setName]["isCommon"],
-					afterForty: setdex[pokeName][setName]["afterForty"],
-					isCustom: setdex[pokeName][setName].isCustomSet,
-					nickname: setdex[pokeName][setName].nickname || "",
-					moves: setdex[pokeName][setName].moves || ["(No Move)", "(No Move)", "(No Move)", "(No Move)"],
-					item: setdex[pokeName][setName].item || "None"
+					text: pokeName
+				});
+			}
+			if (pokeName in setdex) {
+				var setNames = Object.keys(setdex[pokeName]);
+				for (var j = 0; j < setNames.length; j++) {
+					var setName = setNames[j];
+					setOptions.push(fullSetOption(pokeName, setName));
+				}
+			}
+			if (!blankSetHidden)
+			{
+				setOptions.push({
+					pokemon: pokeName,
+					set: "Blank Set",
+					text: pokeName + " (Blank Set)",
+					id: pokeName + " (Blank Set)",
+					moves: ["(No Move)", "(No Move)", "(No Move)", "(No Move)"],
+					item: "None"
 				});
 			}
 		}
-		if (!blankSetHidden)
-		{
-			setOptions.push({
-				pokemon: pokeName,
-				set: "Blank Set",
-				text: pokeName + " (Blank Set)",
-				id: pokeName + " (Blank Set)",
-				moves: ["(No Move)", "(No Move)", "(No Move)", "(No Move)"],
-				item: "None"
-			});
-		}
-
 	}
+	else 
+	{
+		var typeHint = $("select.type-hint option:selected").val();
+		for (var i = 0; i < pokeNames.length; i++) {
+			var pokeName = pokeNames[i];
+			if (pokeName in setdex) {
+				var setNames = Object.keys(setdex[pokeName]);
+				for (var j = 0; j < setNames.length; j++) {
+					var setName = setNames[j];
+					setOptions.push(fullSetOption(pokeName, setName));
+				}
+			}
+		}
+		setOptions.sort(function (a, b) {
+			var p1 = (pokedex[a.pokemon].t1 == typeHint) || (pokedex[a.pokemon].t2 == typeHint);
+			var p2 = (pokedex[b.pokemon].t1 == typeHint) || (pokedex[b.pokemon].t2 == typeHint);
+			if (p1 && !p2)
+				return -1;
+			if (!p1 && p2)
+				return 1;
+			return 0;
+		});
+	}
+
 	return setOptions;
 }
 
