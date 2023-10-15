@@ -63,6 +63,80 @@ $(".level").keyup(function () {
 	calcHP(poke);
 	calcStats(poke);
 });
+
+function calcStatRev(a, stat)
+{
+	var target_total = stat.find(".total").val();
+	var low = 0;
+	var high = 31;
+	while (low <= high)
+	{
+		var curr = Math.floor((high + low) / 2);
+		stat.find(".iv").val(curr);
+		calcStat(a, stat);
+		var actual_total = stat.find(".total").val();
+		if (actual_total < target_total)
+		{
+			//iv too low
+			//check higher 
+			low = curr + 1;
+
+		}
+		else if (actual_total > target_total)
+		{
+			//iv too high
+			//check lower 
+			high = curr - 1;
+		}
+		else
+		{
+			//jackpot, that works!
+			break;
+		}
+	}
+}
+
+function calcStatAny(poke, statName)
+{
+	if (statName == "hp")
+		calcHP(poke);
+	else
+		calcStat(poke, statName);
+}
+
+function calcStatRev(poke, statName)
+{
+	var stat = poke.find("." + statName);
+	var target_total = parseInt(stat.find(".total").val());
+	var low = 0;
+	var high = 31;
+	while (low <= high)
+	{
+		var curr = Math.floor((high + low) / 2);
+		stat.find(".ivs").val(curr);
+		calcStatAny(poke, statName);
+		var actual_total = parseInt(stat.find(".total").val());
+		if (actual_total < target_total)
+		{
+			//iv too low
+			//check higher 
+			low = curr + 1;
+
+		}
+		else if (actual_total > target_total)
+		{
+			//iv too high
+			//check lower 
+			high = curr - 1;
+		}
+		else
+		{
+			//jackpot, that works!
+			break;
+		}
+	}
+}
+
 $(".nature").bind("keyup change", function () {
 	calcStats($(this).closest(".poke-info"));
 });
@@ -84,6 +158,28 @@ $(".sd .base, .sd .evs, .sd .ivs").bind("keyup change", function () {
 $(".sp .base, .sp .evs, .sp .ivs").bind("keyup change", function () {
 	calcStat($(this).closest(".poke-info"), 'sp');
 });
+
+
+$(".hp .total").on("change", function () {
+	calcStatRev($(this).closest(".poke-info"), 'hp');
+});
+$(".at .total").on("change", function () {
+	calcStatRev($(this).closest(".poke-info"), 'at');
+});
+$(".df .total").on("change", function () {
+	calcStatRev($(this).closest(".poke-info"), 'df');
+});
+$(".sa .total").on("change", function () {
+	calcStatRev($(this).closest(".poke-info"), 'sa');
+});
+$(".sd .total").on("change", function () {
+	calcStatRev($(this).closest(".poke-info"), 'sd');
+});
+$(".sp .total").on("change", function () {
+	calcStatRev($(this).closest(".poke-info"), 'sp');
+});
+
+
 $(".evs").bind("keyup change", function () {
 	calcEvTotal($(this).closest(".poke-info"));
 });
@@ -188,13 +284,13 @@ $(".ivsoverrideL1").val("31");
 
 
 $(".current-hp").keyup(function () {
-	var max = $(this).parent().children(".max-hp").text();
+	var max = $(this).parent().children(".max-hp").val();
 	validate($(this), 0, max);
 	var current = $(this).val();
 	calcPercentHP($(this).parent(), max, current);
 });
 $(".percent-hp").keyup(function () {
-	var max = $(this).parent().children(".max-hp").text();
+	var max = $(this).parent().children(".max-hp").val();
 	validate($(this), 0, 100);
 	var percent = $(this).val();
 	calcCurrentHP($(this).parent(), max, percent);
@@ -669,7 +765,7 @@ function Pokemon(pokeInfo) {
 		this.type1 = pokeInfo.find(".type1").val();
 		this.type2 = pokeInfo.find(".type2").val();
 		this.level = ~~pokeInfo.find(".level").val();
-		this.maxHP = ~~pokeInfo.find(".hp .total").text();
+		this.maxHP = ~~pokeInfo.find(".hp .total").val();
 		this.curHP = ~~pokeInfo.find(".current-hp").val();
 		this.HPEVs = ~~pokeInfo.find(".hp .evs").val();
 		this.rawStats = [];
@@ -681,7 +777,7 @@ function Pokemon(pokeInfo) {
       
 
 		for (var i = 0; i < STATS.length; i++) {
-			this.rawStats[STATS[i]] = ~~pokeInfo.find("." + STATS[i] + " .total").text();
+			this.rawStats[STATS[i]] = ~~pokeInfo.find("." + STATS[i] + " .total").val();
 			this.boosts[STATS[i]] = ~~pokeInfo.find("." + STATS[i] + " .boost").val();
 			this.evs[STATS[i]] = ~~pokeInfo.find("." + STATS[i] + " .evs").val();
 		}
@@ -1286,7 +1382,6 @@ function loadDefaultLists() {
 					{			
 						for (i=0; i < 4; i++)
 						{
-							console.log(PHRASE_CATEGORIES[7]);
 							if (PHRASE_CATEGORIES[7].indexOf(object.moves[i]) != -1)
 							{
 									eles[i+2] = `<span style="color:#FF0000">${eles[i+2]}</span>`

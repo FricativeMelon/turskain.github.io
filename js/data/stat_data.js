@@ -35,7 +35,7 @@ function CALC_HP_ADV(poke) {
 		var ivs = ~~hp.find(".ivs").val();
 		total = Math.floor((base * 2 + ivs + Math.floor(evs / 4)) * level / 100) + level + 10;
 	}
-	hp.find(".total").text(total);
+	hp.find(".total").val(total);
 	poke.find(".max-hp").text(total);
 	calcCurrentHP(poke, total, ~~poke.find(".percent-hp").val());
 }
@@ -49,5 +49,5 @@ function CALC_STAT_ADV(poke, statName) {
 	var natureMods = NATURES[poke.find(".nature").val()];
 	var nature = natureMods[0] === statName ? 1.1 : natureMods[1] === statName ? 0.9 : 1;
 	var total = Math.floor((Math.floor((base * 2 + ivs + Math.floor(evs / 4)) * level / 100) + 5) * nature);
-	stat.find(".total").text(total);
+	stat.find(".total").val(total);
 }
