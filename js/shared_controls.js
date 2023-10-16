@@ -484,6 +484,43 @@ $(".move4").change(function () {
 	$("#notes-pp4").prop("title", $(".p2m4").val());
 });
 
+function shallowDictCopy(d)
+{
+	res = {};
+	for (k in d)
+	{
+		res[k] = d[k];
+	};
+	return res;
+}
+
+$(".save-IVs").click(function () {
+	var pokeObj = $(this).closest(".poke-info");
+	var fullSetName = pokeObj.find(".set-selector").text().trim();
+	var pokemonName, setName;
+	pokemonName = fullSetName.substring(0, fullSetName.indexOf(" ("));
+	setName = fullSetName.substring(fullSetName.indexOf("(") + 1, fullSetName.lastIndexOf(")"));
+	if (pokemonName in setdex && setName in setdex[pokemonName])
+	{
+		var set = setdex[pokemonName][setName];
+		var d = shallowDictCopy(set);
+		d.ivs = {};
+		d.ivs["hp"] = pokeObj.find(".hp .ivs").val();
+		for (i = 0; i < STATS.length; i++) {
+			d.ivs[STATS[i]] = pokeObj.find("." + STATS[i] + " .ivs").val();
+		}
+		d.nameProp = setName.substring(0, setName.indexOf("[")+1) + pokeObj.find(".save-name").val()
+		+ setName.substring(setName.indexOf("]"), setName.length);
+		d.name = pokemonName;
+		addToDex(d);
+	}
+});
+
+$("#saveIVsR1").click(function () {
+	var fullSetName = $("#setSelectorR1").val();
+	console.log(fullSetName);
+});
+
 // auto-update set details on select
 $(".set-selector").change(function () {
 	var fullSetName = $(this).val();
@@ -1118,6 +1155,8 @@ var legendPokeAll = legendPoke1.concat(legendPoke2, legendPoke3);
 function isPokeInRound(pokemon, set, round)
 {
 	round = parseInt(round);
+	if (round == 0)
+		return true;
 	var setNum = set[set.indexOf("[")-2];
 	var setCount = Object.keys(setdex[pokemon]).length;
 	if (legendPokeAll.indexOf(pokemon) != -1)
