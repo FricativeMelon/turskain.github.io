@@ -45,7 +45,7 @@
         </div>
     </div>
 
-    <div aria-label="Move selection" class="move-result-group" role="region" title="Select a move to show detailed results.">
+    <div aria-label="Move selection" class="move-result-group" role="region">
         <div  aria-labelledby="resultHeaderL" class="move-result-subgroup" role="radiogroup" style="width:480px;">
             <div hidden class="result-move-header"><span id="resultHeaderL">Pok&eacute;mon 1's Moves (select one to show detailed results)</span>
             </div>
@@ -70,30 +70,30 @@
                 <span id="resultDamageL4">??? - ???%</span>
             </div>
         </div>
-        <div aria-labelledby="resultHeaderR" class="move-result-subgroup" role="radiogroup" style="width:480px;position:relative;left:-100px;">
+        <div  class="move-result-subgroup" role="radiogroup" style="width:480px;position:relative;left:-100px;">
             <div hidden class="result-move-header"><span id="resultHeaderR">Pok&eacute;mon 2's Moves (select one to show detailed results)</span>
             </div>
             <div>
 		        <input class="" id="notes-pp1" value=0 style="width: 30px" type="number" min="0" max="64" step="1" title=""/>
-                <input class="result-move visually-hidden" type="radio" name="resultMove" id="resultMoveR1" aria-describedby="resultDamageR1" />
+                <input class="result-move visually-hidden" type="radio" name="resultMove" id="resultMoveR1" />
                 <label class="btn btn-xxxwide btn-top" for="resultMoveR1">???</label>
                 <span id="resultDamageR1">??? - ???%</span>
             </div>
             <div>
 				<input class="" id="notes-pp2" value=0 style="width: 30px" type="number" min="0" max="64" step="1" title=""/>
-                <input class="result-move visually-hidden" type="radio" name="resultMove" id="resultMoveR2" aria-describedby="resultDamageR2" />
+                <input class="result-move visually-hidden" type="radio" name="resultMove" id="resultMoveR2" />
                 <label class="btn btn-xxxwide btn-mid" for="resultMoveR2">Falcon Punch</label>
                 <span id="resultDamageR2">??? - ???%</span>
             </div>
             <div>
 			    <input class="" id="notes-pp3" value=0 style="width: 30px" type="number" min="0" max="64" step="1"title=""/>
-                <input class="result-move visually-hidden" type="radio" name="resultMove" id="resultMoveR3" aria-describedby="resultDamageR3" />
+                <input class="result-move visually-hidden" type="radio" name="resultMove" id="resultMoveR3"  />
                 <label class="btn btn-xxxwide btn-mid" for="resultMoveR3">Suspicious Odor</label>
                 <span id="resultDamageR3">??? - ???%</span>
             </div>
             <div>
 				<input class="" id="notes-pp4" value=0 style="width: 30px" type="number" min="0" max="64" step="1" title=""/>
-                <input class="result-move visually-hidden" type="radio" name="resultMove" id="resultMoveR4" aria-describedby="resultDamageR4" />
+                <input class="result-move visually-hidden" type="radio" name="resultMove" id="resultMoveR4" />
                 <label class="btn btn-xxxwide btn-bottom" for="resultMoveR4">Tombstoner</label>
                 <span id="resultDamageR4">??? - ???%</span>
             </div>
@@ -667,24 +667,6 @@
         <fieldset class="poke-info" id="p2" style="width:300px; position:relative; top:-40px; left:-20px">
             <legend align="center"></legend>
             <input type="text" class="set-selector calc-trigger" id="setSelectorR1" />
-			<div hidden class="info-group spreadsheet-sorters">
-				<input class="round-hint" id="hint1" style="width: 30px" type="number" min="0" max="64" step="1" value="1" />
-				<label for="hint1">Round</label>
-				<select class="type-hint" id="hint2"></select>
-				<label for="hint2">Type</label>
-				<select class="phrase-hint" id="hint3">
-					<option value = 0>Free</option>
-					<option value = 1>Prep</option>
-					<option value = 2>Slow</option>
-					<option value = 3>Endure</option>
-					<option value = 4>Risk</option>
-					<option value = 5>Weak</option>
-					<option value = 6>Predict</option>
-					<option value = 7>Flow</option>
-					<option value = 8>Adapt</option>
-				</select>
-				<label for="hint3">Phrase</label>
-			</div>
 			<div class="info-group info-selectors">
 			     <table style="width: 100%;table-layout:fixed;">
 				     <colgroup>
@@ -1234,10 +1216,24 @@
         </fieldset>
     </div>
 
-	<div style = "position:absolute; top:250px; left:820px">
+	<div style = "position:absolute; top:200px; left:820px">
 
+	<div class="info-group spreadsheet-sorters">
+		<input class="round-hint" id="hint1" style="width: 30px" type="number" min="0" max="64" step="1" value="1" />
+		<select class="type-hint" id="hint2"></select>
+		<select class="phrase-hint" id="hint3">
+			<option value = 0>Free</option>
+			<option value = 1>Prep</option>
+			<option value = 2>Slow</option>
+			<option value = 3>Endure</option>
+			<option value = 4>Risk</option>
+			<option value = 5>Weak</option>
+			<option value = 6>Predict</option>
+			<option value = 7>Flow</option>
+			<option value = 8>Adapt</option>
+		</select>
+	</div>
 	<input type="checkbox" id="hide-move-calc" /> Spreadsheet mode <br />
-	<input type="checkbox" id="hide-blank-sets" checked = true/> Hide blank sets <br />
 	<div class="panel">
         <div aria-label="Field information" role="region">
             <fieldset class="field-info">
@@ -1461,6 +1457,7 @@
     <script type="text/javascript" src="./js/damage_rse.js?21519192"></script>
     <script type="text/javascript" src="./js/damage_gsc.js?5697bf01"></script>
     <script type="text/javascript" src="./js/damage_rby.js?b4efa273"></script>
+	<script type="text/javascript" src="./js/ai_cal_rse.js?a69fs269"></script>
     <script type="text/javascript" src="./js/ko_chance.js?8f66782c"></script>
     <script type="text/javascript" src="./js/moveset_import.js?d0b1f439"></script>
 </div>

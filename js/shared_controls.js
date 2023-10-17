@@ -945,14 +945,13 @@ function Side(format, terrain, weather, isGravity, isSR, spikes, isReflect, isLi
 }
 
 var gen, genWasChanged, notation, pokedex, setdex, typeChart, moves, abilities, items, STATS, calcHP, calcStat;
-var blankSetHidden, recentSets, moveCalcHidden;
+var recentSets, moveCalcHidden;
 
 $(".gen").change(function () {
 	gen = ~~$(this).val();
 	genWasChanged = true;
 	recentSets = [];
 	moveCalcHidden = false;
-	blankSetHidden = true;
 	switch (gen) {
 	case 1:
 		pokedex = POKEDEX_RBY;
@@ -1062,25 +1061,13 @@ $(".gen").change(function () {
 	}
 });
 
-$("#hide-blank-sets").change(function () {
-	blankSetHidden = this.checked;
-	//$(".set-selector").val(getSetOptions()[gen < 3 ? 3 : 1].id);
-	//$(".set-selector").change();
-});
-
 $("#hide-move-calc").change(function () {
-	a = $("#hide-blank-sets");
-	if (a.prop("checked") == false)
-	{
-		a.prop("checked", true);
-		a.change();
-	}
 	moveCalcHidden = this.checked;
 	if (this.checked)
 	{
 		$(".main-result-group").hide(100, function () {});
 		$(".move-result-group").hide(100, function () {});
-		$(".spreadsheet-sorters").show(100, function () {});
+		//$(".spreadsheet-sorters").show(100, function () {});
 		$("#p1").hide(100, function () {});
 		$("#p2").width("660px");
 	}
@@ -1088,7 +1075,7 @@ $("#hide-move-calc").change(function () {
 	{
 		$(".main-result-group").show(100, function () {});
 		$(".move-result-group").show(100, function () {});
-		$(".spreadsheet-sorters").hide(100, function () {});
+		//$(".spreadsheet-sorters").hide(100, function () {});
 		$("#p1").show(100, function () {});
 		$("#p2").width("300px");
 	}
@@ -1235,30 +1222,12 @@ function getSetOptions(sets) {
 		}
 		for (var i = 0; i < pokeNames.length; i++) {
 			var pokeName = pokeNames[i];
-			if (!blankSetHidden)
-			{
-				setOptions.push({
-					pokemon: pokeName,
-					text: pokeName
-				});
-			}
 			if (pokeName in setdex) {
 				var setNames = Object.keys(setdex[pokeName]);
 				for (var j = 0; j < setNames.length; j++) {
 					var setName = setNames[j];
 					setOptions.push(fullSetOption(pokeName, setName));
 				}
-			}
-			if (!blankSetHidden)
-			{
-				setOptions.push({
-					pokemon: pokeName,
-					set: "Blank Set",
-					text: pokeName + " (Blank Set)",
-					id: pokeName + " (Blank Set)",
-					moves: ["(No Move)", "(No Move)", "(No Move)", "(No Move)"],
-					item: "None"
-				});
 			}
 		}
 	}

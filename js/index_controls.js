@@ -36,6 +36,8 @@ function calculate() {
 	var highestDamage = -1;
 	var bestResult;
 	for (var i = 0; i < 4; i++) {
+		var score = getScore(p2, p1, p2.moves[i]);
+		$(resultLocations[1][i].move + " + label").prop("title", score);
 		result = damageResults[0][i];
 		minDamage = result.damage[0] * p1.moves[i].hits;
 		maxDamage = result.damage[result.damage.length - 1] * p1.moves[i].hits;
