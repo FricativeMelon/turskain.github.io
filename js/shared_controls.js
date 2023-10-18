@@ -1545,9 +1545,13 @@ function loadCustomList(id) {
 function loadFromCache()
 {
 	$("#spaceAdjuster1").val(localStorage.getItem("spaceAdjuster1"));
+	$("#spaceAdjuster1").change();
 	$("#spaceAdjuster2").val(localStorage.getItem("spaceAdjuster2"));
+	$("#spaceAdjuster2").change();
 	$("#fontAdjuster1").val(localStorage.getItem("fontAdjuster1"));
+	$("#fontAdjuster1").change();
 	$("#move-calc-results").prop("checked", localStorage.getItem("move-calc-results"));
+	$("#move-calc-results").change();
 
 }
 
