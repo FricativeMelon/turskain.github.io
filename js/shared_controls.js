@@ -1550,7 +1550,7 @@ function loadFromCache()
 	$("#spaceAdjuster2").change();
 	$("#fontAdjuster1").val(localStorage.getItem("fontAdjuster1"));
 	$("#fontAdjuster1").change();
-	$("#move-calc-results").prop("checked", localStorage.getItem("move-calc-results"));
+	$("#move-calc-results").prop("checked", localStorage.getItem("move-calc-results") == 'true');
 	$("#move-calc-results").change();
 
 }
