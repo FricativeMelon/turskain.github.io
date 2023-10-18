@@ -1484,13 +1484,12 @@ function loadDefaultLists() {
 	
    // this part is responsible for setting last search when select2 is opening
 	$('.set-selector').on('select2-open', function () {
-		if (searchHistory) {
+		if (moveCalcHidden && searchHistory) {
 			$('.select2-search').find('input').val(searchHistory).trigger("paste");
 		}
 	});
 	$('.select2-search').on('keyup', function () {
-		searchHistory = $(this).find('input').val();
-		console.log(searchHistory);
+		if (moveCalcHidden)	searchHistory = $(this).find('input').val();
 	});
 }
 
