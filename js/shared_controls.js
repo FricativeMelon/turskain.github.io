@@ -1101,6 +1101,8 @@ $("#hide-move-calc").change(function () {
 });
 
 $("#move-calc-results").change(function () {
+	var a = this.checked;
+	localStorage.setItem("move-calc-results", a);
 	moveCalcResults = this.checked;
 	if (this.checked)
 	{
@@ -1115,15 +1117,21 @@ $("#move-calc-results").change(function () {
 });
 
 $("#spaceAdjuster1").change(function () {
-	$("#rightCalc").css("left", (parseInt($(this).val()) - 250)+"px");
+	var a = $(this).val();
+	localStorage.setItem("spaceAdjuster1", a);
+	$("#rightCalc").css("left", (parseInt(a) - 250)+"px");
 });
 $("#fontAdjuster1").change(function () {
-	$("#results1").css("font-size", $(this).val()+"px");
-	$("#results2").css("font-size", $(this).val()+"px");
+	var a = $(this).val();
+	localStorage.setItem("fontAdjuster1", a);
+	$("#results1").css("font-size", a+"px");
+	$("#results2").css("font-size", a+"px");
 });
 
 $("#spaceAdjuster2").change(function () {
-	$("#p1").css("width", (parseInt($(this).val())/2+300) + "px");
+	var a = $(this).val();
+	localStorage.setItem("spaceAdjuster2", a);
+	$("#p1").css("width", (parseInt(a)/2+300) + "px");
 	if (moveCalcHidden)
 	{
 		$("#p2").css("width", "660px");
@@ -1131,8 +1139,8 @@ $("#spaceAdjuster2").change(function () {
 	}
 	else
 	{
-		$("#p2").css("width", (parseInt($(this).val())/2+300) + "px");
-		$("#field-container").css("left", (parseInt($(this).val())+785) + "px");
+		$("#p2").css("width", (parseInt(a)/2+300) + "px");
+		$("#field-container").css("left", (parseInt(a)+785) + "px");
 	}
 });
 
@@ -1534,7 +1542,17 @@ function loadCustomList(id) {
 	});
 }
 
+function loadFromCache()
+{
+	$("#spaceAdjuster1").val(localStorage.getItem("spaceAdjuster1"));
+	$("#spaceAdjuster2").val(localStorage.getItem("spaceAdjuster2"));
+	$("#fontAdjuster1").val(localStorage.getItem("fontAdjuster1"));
+	$("#move-calc-results").prop("checked", localStorage.getItem("move-calc-results"));
+
+}
+
 $(document).ready(function () {
+	loadFromCache();
 	$("#gen3").prop("checked", true);
 	$("#gen3").change();
 	$("#percentage").prop("checked", true);
