@@ -518,7 +518,6 @@ $(".save-IVs").click(function () {
 
 $("#saveIVsR1").click(function () {
 	var fullSetName = $("#setSelectorR1").val();
-	console.log(fullSetName);
 });
 
 // auto-update set details on select
@@ -945,7 +944,7 @@ function Side(format, terrain, weather, isGravity, isSR, spikes, isReflect, isLi
 }
 
 var gen, genWasChanged, notation, pokedex, setdex, typeChart, moves, abilities, items, STATS, calcHP, calcStat;
-var recentSets, moveCalcHidden;
+var recentSets, moveCalcHidden, moveCalcResults;
 
 $(".gen").change(function () {
 	gen = ~~$(this).val();
@@ -1065,19 +1064,64 @@ $("#hide-move-calc").change(function () {
 	moveCalcHidden = this.checked;
 	if (this.checked)
 	{
-		$(".main-result-group").hide(100, function () {});
 		$(".move-result-group").hide(100, function () {});
 		//$(".spreadsheet-sorters").show(100, function () {});
 		$("#p1").hide(100, function () {});
 		$("#p2").width("660px");
+
+		$("#results1").hide(100, function () {});
+		$("#results2").hide(100, function () {});
+		$("#field-container").css("left", "725px");
 	}
 	else
 	{
-		$(".main-result-group").show(100, function () {});
+		if (moveCalcResults)
+		{
+			$("#results1").hide(100, function () {});
+			$("#results2").show(100, function () {});
+		}
+		else
+		{
+			$("#results1").show(100, function () {});
+			$("#results2").hide(100, function () {});
+		}
 		$(".move-result-group").show(100, function () {});
 		//$(".spreadsheet-sorters").hide(100, function () {});
 		$("#p1").show(100, function () {});
-		$("#p2").width("300px");
+		$("#p2").width((parseInt($("#spaceAdjuster2").val())/2+300) + "px");
+		$("#field-container").css("left", (parseInt($("#spaceAdjuster2").val())+690) + "px");
+	}
+});
+
+$("#move-calc-results").change(function () {
+	moveCalcResults = this.checked;
+	if (this.checked)
+	{
+		$("#results1").hide(100, function () {});
+		$("#results2").show(100, function () {});
+	}
+	else
+	{
+		$("#results1").show(100, function () {});
+		$("#results2").hide(100, function () {});
+	}
+});
+
+$("#spaceAdjuster1").change(function () {
+	$("#rightCalc").css("left", (parseInt($(this).val()) - 250)+"px");
+});
+
+$("#spaceAdjuster2").change(function () {
+	$("#p1").css("width", (parseInt($(this).val())/2+300) + "px");
+	if (moveCalcHidden)
+	{
+		$("#p2").css("width", "660px");
+		$("#field-container").css("left", "725px");
+	}
+	else
+	{
+		$("#p2").css("width", (parseInt($(this).val())/2+300) + "px");
+		$("#field-container").css("left", (parseInt($(this).val())+690) + "px");
 	}
 });
 

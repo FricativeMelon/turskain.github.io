@@ -207,8 +207,12 @@ $(".result-move").change(function () {
 	if (damageResults) {
 		var result = findDamageResult($(this));
 		if (result) {
-			$("#mainResult").text(result.description + ": " + result.damageText + " -- " + result.koChanceText);
-			$("#damageValues").text("Possible damage amounts: (" + result.damage.join(", ") + ")");
+			var a = result.description + ": " + result.damageText + " -- " + result.koChanceText;
+			var b = "Possible damage amounts: (" + result.damage.join(", ") + ")"
+			$("#mainResult1").text(a);
+			$("#mainResult2").text(a);
+			$("#damageValues1").text(b);
+			$("#damageValues2").text(b);
 		}
 	}
 });
