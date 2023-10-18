@@ -1078,7 +1078,7 @@ $("#hide-move-calc").change(function () {
 
 		$("#results1").hide(100, function () {});
 		$("#results2").hide(100, function () {});
-		$("#field-container").css("left", "725px");
+		$("#field-container").css("left", "820px");
 	}
 	else
 	{
@@ -1096,7 +1096,7 @@ $("#hide-move-calc").change(function () {
 		//$(".spreadsheet-sorters").hide(100, function () {});
 		$("#p1").show(100, function () {});
 		$("#p2").width((parseInt($("#spaceAdjuster2").val())/2+300) + "px");
-		$("#field-container").css("left", (parseInt($("#spaceAdjuster2").val())+690) + "px");
+		$("#field-container").css("left", (parseInt($("#spaceAdjuster2").val())+785) + "px");
 	}
 });
 
@@ -1127,12 +1127,12 @@ $("#spaceAdjuster2").change(function () {
 	if (moveCalcHidden)
 	{
 		$("#p2").css("width", "660px");
-		$("#field-container").css("left", "725px");
+		$("#field-container").css("left", "820px");
 	}
 	else
 	{
 		$("#p2").css("width", (parseInt($(this).val())/2+300) + "px");
-		$("#field-container").css("left", (parseInt($(this).val())+690) + "px");
+		$("#field-container").css("left", (parseInt($(this).val())+785) + "px");
 	}
 });
 
