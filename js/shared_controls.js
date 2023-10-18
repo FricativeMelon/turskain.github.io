@@ -520,6 +520,11 @@ $("#saveIVsR1").click(function () {
 	var fullSetName = $("#setSelectorR1").val();
 });
 
+$(".set-selector").focus(function () {
+	console.log("HI");
+	$(this).val(searchHistory);
+});
+
 // auto-update set details on select
 $(".set-selector").change(function () {
 	var fullSetName = $(this).val();
@@ -944,7 +949,7 @@ function Side(format, terrain, weather, isGravity, isSR, spikes, isReflect, isLi
 }
 
 var gen, genWasChanged, notation, pokedex, setdex, typeChart, moves, abilities, items, STATS, calcHP, calcStat;
-var recentSets, moveCalcHidden, moveCalcResults;
+var recentSets, moveCalcHidden, moveCalcResults, searchHistory;
 
 $(".gen").change(function () {
 	gen = ~~$(this).val();
@@ -1047,6 +1052,8 @@ $(".gen").change(function () {
 	typeHintList[0] = "No hint";
 	var typeHintOptions = getSelectOptions(typeHintList);
 	$("select.type-hint").find("option").remove().end().append("<option value=\"\">(N/A)</option>" + typeHintOptions);
+	
+	searchHistory="";
 
 	setO = getSetOptions();
 	for (i = 0; i < 4; i++)
@@ -1109,6 +1116,10 @@ $("#move-calc-results").change(function () {
 
 $("#spaceAdjuster1").change(function () {
 	$("#rightCalc").css("left", (parseInt($(this).val()) - 250)+"px");
+});
+$("#fontAdjuster1").change(function () {
+	$("#results1").css("font-size", $(this).val()+"px");
+	$("#results2").css("font-size", $(this).val()+"px");
 });
 
 $("#spaceAdjuster2").change(function () {
@@ -1469,6 +1480,17 @@ function loadDefaultLists() {
 			var data = getSetOptions()[gen < 3 ? 3 : 1];
 			callback(data);
 		}
+	});
+	
+   // this part is responsible for setting last search when select2 is opening
+	$('.set-selector').on('select2-open', function () {
+		if (searchHistory) {
+			$('.select2-search').find('input').val(searchHistory).trigger("paste");
+		}
+	});
+	$('.select2-search').on('keyup', function () {
+		searchHistory = $(this).find('input').val();
+		console.log(searchHistory);
 	});
 }
 
