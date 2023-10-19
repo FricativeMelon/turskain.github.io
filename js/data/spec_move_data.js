@@ -1,258 +1,259 @@
-const FLAG_MAKES_CONTACT        = (1 << 0);
-const FLAG_PROTECT_AFFECTED     = (1 << 1);
-const FLAG_MAGIC_COAT_AFFECTED  = (1 << 2);
-const FLAG_SNATCH_AFFECTED      = (1 << 3);
-const FLAG_MIRROR_MOVE_AFFECTED = (1 << 4);
-const FLAG_KINGS_ROCK_AFFECTED  = (1 << 5);
+const var FLAG_MAKES_CONTACT        = (1 << 0);
+const var FLAG_PROTECT_AFFECTED     = (1 << 1);
+const var FLAG_MAGIC_COAT_AFFECTED  = (1 << 2);
+const var FLAG_SNATCH_AFFECTED      = (1 << 3);
+const var FLAG_MIRROR_MOVE_AFFECTED = (1 << 4);
+const var FLAG_KINGS_ROCK_AFFECTED  = (1 << 5);
 
-const MOVE_TARGET_SELECTED           = 0;
-const MOVE_TARGET_DEPENDS            = (1 << 0);
-const MOVE_TARGET_USER_OR_SELECTED   = (1 << 1);
-const MOVE_TARGET_RANDOM             = (1 << 2);
-const MOVE_TARGET_BOTH               = (1 << 3);
-const MOVE_TARGET_USER               = (1 << 4);
-const MOVE_TARGET_FOES_AND_ALLY      = (1 << 5);
-const MOVE_TARGET_OPPONENTS_FIELD    = (1 << 6);
+const var MOVE_TARGET_SELECTED            0;
+const var MOVE_TARGET_DEPENDS             (1 << 0);
+const var MOVE_TARGET_USER_OR_SELECTED    (1 << 1);
+const var MOVE_TARGET_RANDOM              (1 << 2);
+const var MOVE_TARGET_BOTH                (1 << 3);
+const var MOVE_TARGET_USER                (1 << 4);
+const var MOVE_TARGET_FOES_AND_ALLY       (1 << 5);
+const var MOVE_TARGET_OPPONENTS_FIELD     (1 << 6);
 
-const EFFECT_HIT = 0;
-const EFFECT_SLEEP = 1;
-const EFFECT_POISON_HIT = 2;
-const EFFECT_ABSORB = 3;
-const EFFECT_BURN_HIT = 4;
-const EFFECT_FREEZE_HIT = 5;
-const EFFECT_PARALYZE_HIT = 6;
-const EFFECT_EXPLOSION = 7;
-const EFFECT_DREAM_EATER = 8;
-const EFFECT_MIRROR_MOVE = 9;
-const EFFECT_ATTACK_UP = 10;
-const EFFECT_DEFENSE_UP = 11;
-const EFFECT_SPEED_UP = 12;
-const EFFECT_SPECIAL_ATTACK_UP = 13;
-const EFFECT_SPECIAL_DEFENSE_UP = 14;
-const EFFECT_ACCURACY_UP = 15;
-const EFFECT_EVASION_UP = 16;
-const EFFECT_ALWAYS_HIT = 17;
-const EFFECT_ATTACK_DOWN = 18;
-const EFFECT_DEFENSE_DOWN = 19;
-const EFFECT_SPEED_DOWN = 20;
-const EFFECT_SPECIAL_ATTACK_DOWN = 21;  // = unused
-const EFFECT_SPECIAL_DEFENSE_DOWN = 22;  // = unused
-const EFFECT_ACCURACY_DOWN = 23;
-const EFFECT_EVASION_DOWN = 24;
-const EFFECT_HAZE = 25;
-const EFFECT_BIDE = 26;
-const EFFECT_RAMPAGE = 27;
-const EFFECT_ROAR = 28;
-const EFFECT_MULTI_HIT = 29;
-const EFFECT_CONVERSION = 30;
-const EFFECT_FLINCH_HIT = 31;
-const EFFECT_RESTORE_HP = 32;
-const EFFECT_TOXIC = 33;
-const EFFECT_PAY_DAY = 34;
-const EFFECT_LIGHT_SCREEN = 35;
-const EFFECT_TRI_ATTACK = 36;
-const EFFECT_REST = 37;
-const EFFECT_OHKO = 38;
-const EFFECT_RAZOR_WIND = 39;
-const EFFECT_SUPER_FANG = 40;
-const EFFECT_DRAGON_RAGE = 41;
-const EFFECT_TRAP = 42;
-const EFFECT_HIGH_CRITICAL = 43;
-const EFFECT_DOUBLE_HIT = 44;
-const EFFECT_RECOIL_IF_MISS = 45;
-const EFFECT_MIST = 46;
-const EFFECT_FOCUS_ENERGY = 47;
-const EFFECT_RECOIL = 48;
-const EFFECT_CONFUSE = 49;
-const EFFECT_ATTACK_UP_2 = 50;
-const EFFECT_DEFENSE_UP_2 = 51;
-const EFFECT_SPEED_UP_2 = 52;
-const EFFECT_SPECIAL_ATTACK_UP_2 = 53;
-const EFFECT_SPECIAL_DEFENSE_UP_2 = 54;
-const EFFECT_ACCURACY_UP_2 = 55;
-const EFFECT_EVASION_UP_2 = 56;
-const EFFECT_TRANSFORM = 57;
-const EFFECT_ATTACK_DOWN_2 = 58;
-const EFFECT_DEFENSE_DOWN_2 = 59;
-const EFFECT_SPEED_DOWN_2 = 60;
-const EFFECT_SPECIAL_ATTACK_DOWN_2 = 61;
-const EFFECT_SPECIAL_DEFENSE_DOWN_2 = 62;
-const EFFECT_ACCURACY_DOWN_2 = 63;
-const EFFECT_EVASION_DOWN_2 = 64;
-const EFFECT_REFLECT = 65;
-const EFFECT_POISON = 66;
-const EFFECT_PARALYZE = 67;
-const EFFECT_ATTACK_DOWN_HIT = 68;
-const EFFECT_DEFENSE_DOWN_HIT = 69;
-const EFFECT_SPEED_DOWN_HIT = 70;
-const EFFECT_SPECIAL_ATTACK_DOWN_HIT = 71;
-const EFFECT_SPECIAL_DEFENSE_DOWN_HIT = 72;
-const EFFECT_ACCURACY_DOWN_HIT = 73;
-const EFFECT_EVASION_DOWN_HIT = 74;
-const EFFECT_SKY_ATTACK = 75;
-const EFFECT_CONFUSE_HIT = 76;
-const EFFECT_TWINEEDLE = 77;
-const EFFECT_VITAL_THROW = 78;
-const EFFECT_SUBSTITUTE = 79;
-const EFFECT_RECHARGE = 80;
-const EFFECT_RAGE = 81;
-const EFFECT_MIMIC = 82;
-const EFFECT_METRONOME = 83;
-const EFFECT_LEECH_SEED = 84;
-const EFFECT_SPLASH = 85;
-const EFFECT_DISABLE = 86;
-const EFFECT_LEVEL_DAMAGE = 87;
-const EFFECT_PSYWAVE = 88;
-const EFFECT_COUNTER = 89;
-const EFFECT_ENCORE = 90;
-const EFFECT_PAIN_SPLIT = 91;
-const EFFECT_SNORE = 92;
-const EFFECT_CONVERSION_2 = 93;
-const EFFECT_LOCK_ON = 94;
-const EFFECT_SKETCH = 95;
-const EFFECT_UNUSED_60 = 96;  // = thaw
-const EFFECT_SLEEP_TALK = 97;
-const EFFECT_DESTINY_BOND = 98;
-const EFFECT_FLAIL = 99;
-const EFFECT_SPITE = 100;
-const EFFECT_FALSE_SWIPE = 101;
-const EFFECT_HEAL_BELL = 102;
-const EFFECT_QUICK_ATTACK = 103;
-const EFFECT_TRIPLE_KICK = 104;
-const EFFECT_THIEF = 105;
-const EFFECT_MEAN_LOOK = 106;
-const EFFECT_NIGHTMARE = 107;
-const EFFECT_MINIMIZE = 108;
-const EFFECT_CURSE = 109;
-const EFFECT_UNUSED_6E = 110;
-const EFFECT_PROTECT = 111;
-const EFFECT_SPIKES = 112;
-const EFFECT_FORESIGHT = 113;
-const EFFECT_PERISH_SONG = 114;
-const EFFECT_SANDSTORM = 115;
-const EFFECT_ENDURE = 116;
-const EFFECT_ROLLOUT = 117;
-const EFFECT_SWAGGER = 118;
-const EFFECT_FURY_CUTTER = 119;
-const EFFECT_ATTRACT = 120;
-const EFFECT_RETURN = 121;
-const EFFECT_PRESENT = 122;
-const EFFECT_FRUSTRATION = 123;
-const EFFECT_SAFEGUARD = 124;
-const EFFECT_THAW_HIT = 125;
-const EFFECT_MAGNITUDE = 126;
-const EFFECT_BATON_PASS = 127;
-const EFFECT_PURSUIT = 128;
-const EFFECT_RAPID_SPIN = 129;
-const EFFECT_SONICBOOM = 130;
-const EFFECT_UNUSED_83 = 131;
-const EFFECT_MORNING_SUN = 132;
-const EFFECT_SYNTHESIS = 133;
-const EFFECT_MOONLIGHT = 134;
-const EFFECT_HIDDEN_POWER = 135;
-const EFFECT_RAIN_DANCE = 136;
-const EFFECT_SUNNY_DAY = 137;
-const EFFECT_DEFENSE_UP_HIT = 138;
-const EFFECT_ATTACK_UP_HIT = 139;
-const EFFECT_ALL_STATS_UP_HIT = 140;
-const EFFECT_UNUSED_8D = 141;  // incomplete fake out in gen = 2
-const EFFECT_BELLY_DRUM = 142;
-const EFFECT_PSYCH_UP = 143;
-const EFFECT_MIRROR_COAT = 144;
-const EFFECT_SKULL_BASH = 145;
-const EFFECT_TWISTER = 146;
-const EFFECT_EARTHQUAKE = 147;
-const EFFECT_FUTURE_SIGHT = 148;
-const EFFECT_GUST = 149;
-const EFFECT_FLINCH_MINIMIZE_HIT = 150;  // STOMP ASTONISH EXTRASENSORY = NEEDLE_ARM
-const EFFECT_SOLAR_BEAM = 151;
-const EFFECT_THUNDER = 152;
-const EFFECT_TELEPORT = 153;
-const EFFECT_BEAT_UP = 154;
-const EFFECT_SEMI_INVULNERABLE = 155;
-const EFFECT_DEFENSE_CURL = 156;
-const EFFECT_SOFTBOILED = 157;
-const EFFECT_FAKE_OUT = 158;
-const EFFECT_UPROAR = 159;
-const EFFECT_STOCKPILE = 160;
-const EFFECT_SPIT_UP = 161;
-const EFFECT_SWALLOW = 162;
-const EFFECT_UNUSED_A3 = 163;
-const EFFECT_HAIL = 164;
-const EFFECT_TORMENT = 165;
-const EFFECT_FLATTER = 166;
-const EFFECT_WILL_O_WISP = 167;
-const EFFECT_MEMENTO = 168;
-const EFFECT_FACADE = 169;
-const EFFECT_FOCUS_PUNCH = 170;
-const EFFECT_SMELLINGSALT = 171;
-const EFFECT_FOLLOW_ME = 172;
-const EFFECT_NATURE_POWER = 173;
-const EFFECT_CHARGE = 174;
-const EFFECT_TAUNT = 175;
-const EFFECT_HELPING_HAND = 176;
-const EFFECT_TRICK = 177;
-const EFFECT_ROLE_PLAY = 178;
-const EFFECT_WISH = 179;
-const EFFECT_ASSIST = 180;
-const EFFECT_INGRAIN = 181;
-const EFFECT_SUPERPOWER = 182;
-const EFFECT_MAGIC_COAT = 183;
-const EFFECT_RECYCLE = 184;
-const EFFECT_REVENGE = 185;
-const EFFECT_BRICK_BREAK = 186;
-const EFFECT_YAWN = 187;
-const EFFECT_KNOCK_OFF = 188;
-const EFFECT_ENDEAVOR = 189;
-const EFFECT_ERUPTION = 190;
-const EFFECT_SKILL_SWAP = 191;
-const EFFECT_IMPRISON = 192;
-const EFFECT_REFRESH = 193;
-const EFFECT_GRUDGE = 194;
-const EFFECT_SNATCH = 195;
-const EFFECT_LOW_KICK = 196;
-const EFFECT_SECRET_POWER = 197;
-const EFFECT_DOUBLE_EDGE = 198;
-const EFFECT_TEETER_DANCE = 199;
-const EFFECT_BLAZE_KICK = 200;
-const EFFECT_MUD_SPORT = 201;
-const EFFECT_POISON_FANG = 202;
-const EFFECT_WEATHER_BALL = 203;
-const EFFECT_OVERHEAT = 204;
-const EFFECT_TICKLE = 205;
-const EFFECT_COSMIC_POWER = 206;
-const EFFECT_SKY_UPPERCUT = 207;
-const EFFECT_BULK_UP = 208;
-const EFFECT_POISON_TAIL = 209;
-const EFFECT_WATER_SPORT = 210;
-const EFFECT_CALM_MIND = 211;
-const EFFECT_DRAGON_DANCE = 212;
-const EFFECT_CAMOUFLAGE = 213;
+const var EFFECT_HIT = 0;
+const var EFFECT_SLEEP = 1;
+const var EFFECT_POISON_HIT = 2;
+const var EFFECT_ABSORB = 3;
+const var EFFECT_BURN_HIT = 4;
+const var EFFECT_FREEZE_HIT = 5;
+const var EFFECT_PARALYZE_HIT = 6;
+const var EFFECT_EXPLOSION = 7;
+const var EFFECT_DREAM_EATER = 8;
+const var EFFECT_MIRROR_MOVE = 9;
+const var EFFECT_ATTACK_UP = 10;
+const var EFFECT_DEFENSE_UP = 11;
+const var EFFECT_SPEED_UP = 12;
+const var EFFECT_SPECIAL_ATTACK_UP = 13;
+const var EFFECT_SPECIAL_DEFENSE_UP = 14;
+const var EFFECT_ACCURACY_UP = 15;
+const var EFFECT_EVASION_UP = 16;
+const var EFFECT_ALWAYS_HIT = 17;
+const var EFFECT_ATTACK_DOWN = 18;
+const var EFFECT_DEFENSE_DOWN = 19;
+const var EFFECT_SPEED_DOWN = 20;
+const var EFFECT_SPECIAL_ATTACK_DOWN 21  // = unused;
+const var EFFECT_SPECIAL_DEFENSE_DOWN 22  // = unused;
+const var EFFECT_ACCURACY_DOWN = 23;
+const var EFFECT_EVASION_DOWN = 24;
+const var EFFECT_HAZE = 25;
+const var EFFECT_BIDE = 26;
+const var EFFECT_RAMPAGE = 27;
+const var EFFECT_ROAR = 28;
+const var EFFECT_MULTI_HIT = 29;
+const var EFFECT_CONVERSION = 30;
+const var EFFECT_FLINCH_HIT = 31;
+const var EFFECT_RESTORE_HP = 32;
+const var EFFECT_TOXIC = 33;
+const var EFFECT_PAY_DAY = 34;
+const var EFFECT_LIGHT_SCREEN = 35;
+const var EFFECT_TRI_ATTACK = 36;
+const var EFFECT_REST = 37;
+const var EFFECT_OHKO = 38;
+const var EFFECT_RAZOR_WIND = 39;
+const var EFFECT_SUPER_FANG = 40;
+const var EFFECT_DRAGON_RAGE = 41;
+const var EFFECT_TRAP = 42;
+const var EFFECT_HIGH_CRITICAL = 43;
+const var EFFECT_DOUBLE_HIT = 44;
+const var EFFECT_RECOIL_IF_MISS = 45;
+const var EFFECT_MIST = 46;
+const var EFFECT_FOCUS_ENERGY = 47;
+const var EFFECT_RECOIL = 48;
+const var EFFECT_CONFUSE = 49;
+const var EFFECT_ATTACK_UP_2 = 50;
+const var EFFECT_DEFENSE_UP_2 = 51;
+const var EFFECT_SPEED_UP_2 = 52;
+const var EFFECT_SPECIAL_ATTACK_UP_2 = 53;
+const var EFFECT_SPECIAL_DEFENSE_UP_2 = 54;
+const var EFFECT_ACCURACY_UP_2 = 55;
+const var EFFECT_EVASION_UP_2 = 56;
+const var EFFECT_TRANSFORM = 57;
+const var EFFECT_ATTACK_DOWN_2 = 58;
+const var EFFECT_DEFENSE_DOWN_2 = 59;
+const var EFFECT_SPEED_DOWN_2 = 60;
+const var EFFECT_SPECIAL_ATTACK_DOWN_2 = 61;
+const var EFFECT_SPECIAL_DEFENSE_DOWN_2 = 62;
+const var EFFECT_ACCURACY_DOWN_2 = 63;
+const var EFFECT_EVASION_DOWN_2 = 64;
+const var EFFECT_REFLECT = 65;
+const var EFFECT_POISON = 66;
+const var EFFECT_PARALYZE = 67;
+const var EFFECT_ATTACK_DOWN_HIT = 68;
+const var EFFECT_DEFENSE_DOWN_HIT = 69;
+const var EFFECT_SPEED_DOWN_HIT = 70;
+const var EFFECT_SPECIAL_ATTACK_DOWN_HIT = 71;
+const var EFFECT_SPECIAL_DEFENSE_DOWN_HIT = 72;
+const var EFFECT_ACCURACY_DOWN_HIT = 73;
+const var EFFECT_EVASION_DOWN_HIT = 74;
+const var EFFECT_SKY_ATTACK = 75;
+const var EFFECT_CONFUSE_HIT = 76;
+const var EFFECT_TWINEEDLE = 77;
+const var EFFECT_VITAL_THROW = 78;
+const var EFFECT_SUBSTITUTE = 79;
+const var EFFECT_RECHARGE = 80;
+const var EFFECT_RAGE = 81;
+const var EFFECT_MIMIC = 82;
+const var EFFECT_METRONOME = 83;
+const var EFFECT_LEECH_SEED = 84;
+const var EFFECT_SPLASH = 85;
+const var EFFECT_DISABLE = 86;
+const var EFFECT_LEVEL_DAMAGE = 87;
+const var EFFECT_PSYWAVE = 88;
+const var EFFECT_COUNTER = 89;
+const var EFFECT_ENCORE = 90;
+const var EFFECT_PAIN_SPLIT = 91;
+const var EFFECT_SNORE = 92;
+const var EFFECT_CONVERSION_2 = 93;
+const var EFFECT_LOCK_ON = 94;
+const var EFFECT_SKETCH = 95;
+const var EFFECT_UNUSED_60 96  // = thaw;
+const var EFFECT_SLEEP_TALK = 97;
+const var EFFECT_DESTINY_BOND = 98;
+const var EFFECT_FLAIL = 99;
+const var EFFECT_SPITE = 100;
+const var EFFECT_FALSE_SWIPE = 101;
+const var EFFECT_HEAL_BELL = 102;
+const var EFFECT_QUICK_ATTACK = 103;
+const var EFFECT_TRIPLE_KICK = 104;
+const var EFFECT_THIEF = 105;
+const var EFFECT_MEAN_LOOK = 106;
+const var EFFECT_NIGHTMARE = 107;
+const var EFFECT_MINIMIZE = 108;
+const var EFFECT_CURSE = 109;
+const var EFFECT_UNUSED_6E = 110;
+const var EFFECT_PROTECT = 111;
+const var EFFECT_SPIKES = 112;
+const var EFFECT_FORESIGHT = 113;
+const var EFFECT_PERISH_SONG = 114;
+const var EFFECT_SANDSTORM = 115;
+const var EFFECT_ENDURE = 116;
+const var EFFECT_ROLLOUT = 117;
+const var EFFECT_SWAGGER = 118;
+const var EFFECT_FURY_CUTTER = 119;
+const var EFFECT_ATTRACT = 120;
+const var EFFECT_RETURN = 121;
+const var EFFECT_PRESENT = 122;
+const var EFFECT_FRUSTRATION = 123;
+const var EFFECT_SAFEGUARD = 124;
+const var EFFECT_THAW_HIT = 125;
+const var EFFECT_MAGNITUDE = 126;
+const var EFFECT_BATON_PASS = 127;
+const var EFFECT_PURSUIT = 128;
+const var EFFECT_RAPID_SPIN = 129;
+const var EFFECT_SONICBOOM = 130;
+const var EFFECT_UNUSED_83 = 131;
+const var EFFECT_MORNING_SUN = 132;
+const var EFFECT_SYNTHESIS = 133;
+const var EFFECT_MOONLIGHT = 134;
+const var EFFECT_HIDDEN_POWER = 135;
+const var EFFECT_RAIN_DANCE = 136;
+const var EFFECT_SUNNY_DAY = 137;
+const var EFFECT_DEFENSE_UP_HIT = 138;
+const var EFFECT_ATTACK_UP_HIT = 139;
+const var EFFECT_ALL_STATS_UP_HIT = 140;
+const var EFFECT_UNUSED_8D 141  // incomplete fake out in gen = 2;
+const var EFFECT_BELLY_DRUM = 142;
+const var EFFECT_PSYCH_UP = 143;
+const var EFFECT_MIRROR_COAT = 144;
+const var EFFECT_SKULL_BASH = 145;
+const var EFFECT_TWISTER = 146;
+const var EFFECT_EARTHQUAKE = 147;
+const var EFFECT_FUTURE_SIGHT = 148;
+const var EFFECT_GUST = 149;
+const var EFFECT_FLINCH_MINIMIZE_HIT 150  // STOMP ASTONISH EXTRASENSORY = NEEDLE_ARM;
+const var EFFECT_SOLAR_BEAM = 151;
+const var EFFECT_THUNDER = 152;
+const var EFFECT_TELEPORT = 153;
+const var EFFECT_BEAT_UP = 154;
+const var EFFECT_SEMI_INVULNERABLE = 155;
+const var EFFECT_DEFENSE_CURL = 156;
+const var EFFECT_SOFTBOILED = 157;
+const var EFFECT_FAKE_OUT = 158;
+const var EFFECT_UPROAR = 159;
+const var EFFECT_STOCKPILE = 160;
+const var EFFECT_SPIT_UP = 161;
+const var EFFECT_SWALLOW = 162;
+const var EFFECT_UNUSED_A3 = 163;
+const var EFFECT_HAIL = 164;
+const var EFFECT_TORMENT = 165;
+const var EFFECT_FLATTER = 166;
+const var EFFECT_WILL_O_WISP = 167;
+const var EFFECT_MEMENTO = 168;
+const var EFFECT_FACADE = 169;
+const var EFFECT_FOCUS_PUNCH = 170;
+const var EFFECT_SMELLINGSALT = 171;
+const var EFFECT_FOLLOW_ME = 172;
+const var EFFECT_NATURE_POWER = 173;
+const var EFFECT_CHARGE = 174;
+const var EFFECT_TAUNT = 175;
+const var EFFECT_HELPING_HAND = 176;
+const var EFFECT_TRICK = 177;
+const var EFFECT_ROLE_PLAY = 178;
+const var EFFECT_WISH = 179;
+const var EFFECT_ASSIST = 180;
+const var EFFECT_INGRAIN = 181;
+const var EFFECT_SUPERPOWER = 182;
+const var EFFECT_MAGIC_COAT = 183;
+const var EFFECT_RECYCLE = 184;
+const var EFFECT_REVENGE = 185;
+const var EFFECT_BRICK_BREAK = 186;
+const var EFFECT_YAWN = 187;
+const var EFFECT_KNOCK_OFF = 188;
+const var EFFECT_ENDEAVOR = 189;
+const var EFFECT_ERUPTION = 190;
+const var EFFECT_SKILL_SWAP = 191;
+const var EFFECT_IMPRISON = 192;
+const var EFFECT_REFRESH = 193;
+const var EFFECT_GRUDGE = 194;
+const var EFFECT_SNATCH = 195;
+const var EFFECT_LOW_KICK = 196;
+const var EFFECT_SECRET_POWER = 197;
+const var EFFECT_DOUBLE_EDGE = 198;
+const var EFFECT_TEETER_DANCE = 199;
+const var EFFECT_BLAZE_KICK = 200;
+const var EFFECT_MUD_SPORT = 201;
+const var EFFECT_POISON_FANG = 202;
+const var EFFECT_WEATHER_BALL = 203;
+const var EFFECT_OVERHEAT = 204;
+const var EFFECT_TICKLE = 205;
+const var EFFECT_COSMIC_POWER = 206;
+const var EFFECT_SKY_UPPERCUT = 207;
+const var EFFECT_BULK_UP = 208;
+const var EFFECT_POISON_TAIL = 209;
+const var EFFECT_WATER_SPORT = 210;
+const var EFFECT_CALM_MIND = 211;
+const var EFFECT_DRAGON_DANCE = 212;
+const var EFFECT_CAMOUFLAGE = 213;
 
-const NUM_BATTLE_MOVE_EFFECTS = 214;
+const var NUM_BATTLE_MOVE_EFFECTS = 214;
 
-const TYPE_NONE             = 255;
-const TYPE_NORMAL           = 0;
-const TYPE_FIGHTING         = 1;
-const TYPE_FLYING           = 2;
-const TYPE_POISON           = 3;
-const TYPE_GROUND           = 4;
-const TYPE_ROCK             = 5;
-const TYPE_BUG              = 6;
-const TYPE_GHOST            = 7;
-const TYPE_STEEL            = 8;
-const TYPE_MYSTERY          = 9;
-const TYPE_FIRE             = 10;
-const TYPE_WATER            = 11;
-const TYPE_GRASS            = 12;
-const TYPE_ELECTRIC         = 13;
-const TYPE_PSYCHIC          = 14;
-const TYPE_ICE              = 15;
-const TYPE_DRAGON           = 16;
-const TYPE_DARK             = 17;
-const NUMBER_OF_MON_TYPES   = 18;
+const var TYPE_NONE             = 255;
+const var TYPE_NORMAL           = 0;
+const var TYPE_FIGHTING         = 1;
+const var TYPE_FLYING           = 2;
+const var TYPE_POISON           = 3;
+const var TYPE_GROUND           = 4;
+const var TYPE_ROCK             = 5;
+const var TYPE_BUG              = 6;
+const var TYPE_GHOST            = 7;
+const var TYPE_STEEL            = 8;
+const var TYPE_MYSTERY          = 9;
+const var TYPE_FIRE             = 10;
+const var TYPE_WATER            = 11;
+const var TYPE_GRASS            = 12;
+const var TYPE_ELECTRIC         = 13;
+const var TYPE_PSYCHIC          = 14;
+const var TYPE_ICE              = 15;
+const var TYPE_DRAGON           = 16;
+const var TYPE_DARK             = 17;
+const var NUMBER_OF_MON_TYPES   = 18;
 
-var gBattleMoves = {
+gBattleMoves =
+{
     'None' :
     {
         effect : EFFECT_HIT,
@@ -4868,119 +4869,3 @@ var gBattleMoves = {
         flags : FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGS_ROCK_AFFECTED,
     },
 };
-
-
-function checkEffectBad10(attacker, defender, move, effect)
-{
-	if (gBattleMoves[move.name]["effect"] == effect)
-		return -10;
-	return 0;
-}
-
-function setUpQuickMoveAbilityDict()
-{
-	d = {};
-	
-	return d;
-}
-
-function checkBadMove(attacker, defender, move)
-{
-	if (TypeCalc(attacker, defender, move) == 0) 
-	{
-		return "Doesn't affect target: -10";
-	}
-	var a = 0;
-	switch (defender.ability)
-	{
-		case "Volt Absorb":
-			if (move.type == "Electric")
-			{
-				a = -12;
-			}
-			break;
-		case "Water Absorb":
-			if (move.type == "Water")
-			{
-				a = -12;
-			}
-			break;
-		case "Flash Fire":
-			if (move.type == "Fire")
-			{
-				a = -12;
-			}
-			break;
-		case "Soundproof":
-			switch (move.name)
-			{
-				case "Growl": case "Roar": case "Sing": case "Supersonic": case "Screech":
-				case "Snore": case "Uproar": case "Metal Sound": case "Grass Whistle":
-					a = -10;
-					break;
-			}
-		
-			break;
-		case "Insomnia": case "Vital Spirit":
-			a = checkEffectBad10(attacker, defender, move, EFFECT_SLEEP);
-			break;
-		case "Damp":
-			a = checkEffectBad10(attacker, defender, move, EFFECT_EXPLOSION);
-			break;
-	}
-	if (a != 0) return "Target has " + defender.ability + ": " + a;
-	switch (move.name)
-	{
-		case "Horn Drill": case "Fissure":
-			break;
-		case "Self-Destruct": case "Explosion":
-			return "User has backup/Target has backup/Else: 0/-10/-1";
-			break;
-		default:
-			break;
-	}
-	switch (defender.status)
-	{
-		case "Asleep":
-			return "Target asleep: " + checkEffectBad10(attacker, defender, move, EFFECT_SLEEP);
-	}
-			
-	return "Nothing notable: 0";
-}
-
-function getScore(attacker, defender, move)
-{
-	return checkBadMove(attacker, defender, move);
-}
-
-function TypeCalc(attacker, defender, move)
-{
-    if (move.moveName == "Struggle")
-        return 1;
-
-    // check stab
-	//if (attacker.type1 == move.type || attacker.type2 == move.type)
-    //{
-    //    gBattleMoveDamage = gBattleMoveDamage * 15;
-    //    gBattleMoveDamage = gBattleMoveDamage / 10;
-    //}
-
-	res = 1;
-
-    if (defender.ability == "Levitate" && move.type == "Ground")
-    {
-		return 0;
-        //flags |= (MOVE_RESULT_MISSED | MOVE_RESULT_DOESNT_AFFECT_FOE);
-    }
-    else
-    {
-        res = res*typeChart[move.type][defender.type1];
-		res = res*typeChart[move.type][defender.type2];
-    }
-
-    if (defender.ability == "Wonder Guard" && (res < 2))
-    {
-        return 0;
-    }
-    return res;
-}

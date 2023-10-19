@@ -949,13 +949,14 @@ function Side(format, terrain, weather, isGravity, isSR, spikes, isReflect, isLi
 }
 
 var gen, genWasChanged, notation, pokedex, setdex, typeChart, moves, abilities, items, STATS, calcHP, calcStat;
-var recentSets, moveCalcHidden, moveCalcResults, searchHistory;
+var recentSets, moveCalcHidden, moveCalcResults, searchHistory, spreadsheetColors;
 
 $(".gen").change(function () {
 	gen = ~~$(this).val();
 	genWasChanged = true;
 	recentSets = [];
 	moveCalcHidden = false;
+	spreadsheetColors = false;
 	switch (gen) {
 	case 1:
 		pokedex = POKEDEX_RBY;
@@ -1072,27 +1073,29 @@ $("#hide-move-calc").change(function () {
 	if (this.checked)
 	{
 		$(".move-result-group").hide(100, function () {});
+		$("#p2-data").hide(100, function () {});
 		//$(".spreadsheet-sorters").show(100, function () {});
 		$("#p1").hide(100, function () {});
 		$("#p2").width("660px");
 
-		$("#results1").hide(100, function () {});
-		$("#results2").hide(100, function () {});
+		//$("#results1").hide(100, function () {});
+		//$("#results2").hide(100, function () {});
 		$("#field-container").css("left", "820px");
 	}
 	else
 	{
 		if (moveCalcResults)
 		{
-			$("#results1").hide(100, function () {});
-			$("#results2").show(100, function () {});
+			//$("#results1").hide(100, function () {});
+			//$("#results2").show(100, function () {});
 		}
 		else
 		{
-			$("#results1").show(100, function () {});
-			$("#results2").hide(100, function () {});
+			//$("#results1").show(100, function () {});
+			//$("#results2").hide(100, function () {});
 		}
 		$(".move-result-group").show(100, function () {});
+		$("#p2-data").show(100, function () {});
 		//$(".spreadsheet-sorters").hide(100, function () {});
 		$("#p1").show(100, function () {});
 		$("#p2").width((parseInt($("#spaceAdjuster2").val())/2+300) + "px");
@@ -1114,6 +1117,12 @@ $("#move-calc-results").change(function () {
 		$("#results1").show(100, function () {});
 		$("#results2").hide(100, function () {});
 	}
+});
+
+$("#spreadsheet-colors").change(function () {
+	var a = this.checked;
+	localStorage.setItem("spreadsheet-colors", a);
+	spreadsheetColors = this.checked;
 });
 
 $("#spaceAdjuster1").change(function () {
@@ -1419,9 +1428,41 @@ function getTerrainEffects() {
 }
 
 function pad(pad, str) {
+	if (str.length > 2 * pad.length - 1)
+	{
+		a = str.indexOf(" ")
+		while (a != -1)
+		{
+			str = str.substring(0, a) + str.substring(a+1, str.length);
+			console.log(str);
+			a = str.indexOf(" ");
+		}
+	}
 	if (typeof str === 'undefined') 
 		return pad;
 	return (pad + str + pad).substring(str.length / 2 + 1, str.length / 2 + 2 * pad.length);
+}
+
+var phraseColors = [
+	"#000000",
+	"#00BB00",
+	"#0000FF",
+	"#BBBB00",
+	"#FF0000",
+	"#009999",
+	"#DD00DD",
+	"#FF7700",
+	"#999999",
+]
+
+function getPhrase(move)
+{
+	for (j=1; j < 9; j++)
+	{
+		if (PHRASE_CATEGORIES[j-1].indexOf(move) != -1)
+			return j;
+	}
+	return 0;
 }
 
 function loadDefaultLists() {
@@ -1439,27 +1480,25 @@ function loadDefaultLists() {
 					{
 						eles[i] = pad(padding, eles[i], false);
 					}
-					if (phraseHint != 0)
-					{			
-						for (i=0; i < 4; i++)
+					var styleCode = "";
+					for (i=0; i < 4; i++)
+					{
+						var movePhrase = getPhrase(object.moves[i]);
+						styleCode = `${styleCode} ${movePhrase}`;
+						if (phraseHint != 0 && phraseHint == movePhrase)
 						{
-							if (PHRASE_CATEGORIES[phraseHint-1].indexOf(object.moves[i]) != -1)
-							{
-									eles[i+2] = `<span style="color:#FF0000">${eles[i+2]}</span>`
-							}
+							eles[i+2] = `<u>${eles[i+2]}</u>`;
+						}
+						if (spreadsheetColors)
+						{
+							eles[i+2] = `<span title = ${movePhrase} style="color:${phraseColors[movePhrase]}">${eles[i+2]}</span>`;
+						}
+						else
+						{
+							eles[i+2] = `<span title = ${movePhrase}>${eles[i+2]}</span>`;
 						}
 					}
-					else
-					{			
-						for (i=0; i < 4; i++)
-						{
-							if (PHRASE_CATEGORIES[7].indexOf(object.moves[i]) != -1)
-							{
-									eles[i+2] = `<span style="color:#FF0000">${eles[i+2]}</span>`
-							}
-						}
-					}
-					return eles.join("|");
+					return `<span title = '${styleCode}'>${eles.join("|")}</span>`;
 					//return pad(padding, object.set.substring(0, object.set.indexOf("[")-1), false) + "|"; 
 					//`|<b>${object.item.padEnd(120, " ")}</b>|${object.moves[0].padEnd(12, " ")}|${object.moves[1].padEnd(12, " ")}` +
 					//`|${object.moves[2].padEnd(12, " ")}|${object.moves[3].padEnd(12, " ")}`);
@@ -1552,6 +1591,8 @@ function loadFromCache()
 	$("#fontAdjuster1").change();
 	$("#move-calc-results").prop("checked", localStorage.getItem("move-calc-results") == 'true');
 	$("#move-calc-results").change();
+	$("#spreadsheet-colors").prop("checked", localStorage.getItem("spreadsheet-colors") == 'true');
+	$("#spreadsheet-colors").change();
 
 }
 
