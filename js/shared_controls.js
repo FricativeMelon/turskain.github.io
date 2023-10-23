@@ -949,7 +949,7 @@ function Side(format, terrain, weather, isGravity, isSR, spikes, isReflect, isLi
 }
 
 var gen, genWasChanged, notation, pokedex, setdex, typeChart, moves, abilities, items, STATS, calcHP, calcStat;
-var recentSets, moveCalcHidden, moveCalcResults, searchHistory, spreadsheetColors;
+var recentSets, moveCalcHidden, moveCalcResults, searchHistory, spreadsheetColors, settingsHidden;
 
 $(".gen").change(function () {
 	gen = ~~$(this).val();
@@ -1068,6 +1068,51 @@ $(".gen").change(function () {
 	}
 });
 
+function generateTable(listOfRows) {
+  // creates a <table> element and a <tbody> element
+  const tbl = document.createElement("table");
+  const tblBody = document.createElement("tbody");
+
+  // creating all cells
+  for (let i = 0; i < listOfRows.length; i++) {
+	var arr = listOfRows[i];
+    // creates a table row
+    const row = document.createElement("tr");
+
+    for (let j = 0; j < arr.length; j++) {
+      // Create a <td> element and a text node, make the text
+      // node the contents of the <td>, and put the <td> at
+      // the end of the table row
+      const cell = document.createElement("td");
+      const cellText = jQuery.parseHTML(arr[j]);
+      cell.appendChild(cellText[0]);
+      row.appendChild(cell);
+    }
+
+    // add the row to the end of the table body
+    tblBody.appendChild(row);
+  }
+
+  // put the <tbody> in the <table>
+  tbl.appendChild(tblBody);
+  tbl.setAttribute("border", "2");
+  // appends <table> into <body>
+  return tbl;
+  // sets the border attribute of tbl to '2'
+}
+
+$("#settings-toggle").change(function () {
+	settingsHidden = this.checked;
+	if (this.checked)
+	{
+		$("#settings").hide(100, function () {});
+	}
+	else
+	{
+		$("#settings").show(100, function () {});
+	}
+});
+
 $("#hide-move-calc").change(function () {
 	moveCalcHidden = this.checked;
 	if (this.checked)
@@ -1130,6 +1175,19 @@ $("#spaceAdjuster1").change(function () {
 	localStorage.setItem("spaceAdjuster1", a);
 	$("#rightCalc").css("left", (parseInt(a) - 250)+"px");
 });
+
+$("#spreadsheetAdjusterHor").change(function () {
+	var a = $(this).val();
+	localStorage.setItem("spreadsheetAdjusterHor", a);
+	$("#spreadsheet-display").css("left", parseInt(a)+"px");
+});
+
+$("#spreadsheetAdjusterVer").change(function () {
+	var a = $(this).val();
+	localStorage.setItem("spreadsheetAdjusterVer", a);
+	$("#spreadsheet-display").css("top", parseInt(a)+"px");
+});
+
 $("#fontAdjuster1").change(function () {
 	var a = $(this).val();
 	localStorage.setItem("fontAdjuster1", a);
@@ -1193,7 +1251,7 @@ function fullSetOption(pokeName, setName)
 	var res = {
 		pokemon: pokeName,
 		set: setName,
-		text: pokeName + " (" + setName + ")",
+		text: setName,
 		id: pokeName + " (" + setName + ")",
 		isCommon: setdex[pokeName][setName]["isCommon"],
 		afterForty: setdex[pokeName][setName]["afterForty"],
@@ -1465,50 +1523,97 @@ function getPhrase(move)
 	return 0;
 }
 
+function setToSpreadsheetDisplay(object)
+{
+	if (moveCalcHidden)
+	{
+		if (object.set)
+		{
+			var phraseHint = $("#hint3").val();
+			var padding = Array(8).join('-');
+			var eles = [object.set.substring(0, object.set.indexOf("[")-1),
+						object.item, object.moves[0], object.moves[1], object.moves[2], object.moves[3]];
+			var styleCode = "";
+			for (i=0; i < 4; i++)
+			{
+				var movePhrase = getPhrase(object.moves[i]);
+				styleCode = `${styleCode} ${movePhrase}`;
+				if (phraseHint != 0 && phraseHint == movePhrase)
+				{
+					eles[i+2] = `<u>${eles[i+2]}</u>`;
+				}
+				if (spreadsheetColors)
+				{
+					eles[i+2] = `<span title = ${movePhrase} style="color:${phraseColors[movePhrase]}">${eles[i+2]}</span>`;
+				}
+				else
+				{
+					eles[i+2] = `<span title = ${movePhrase}>${eles[i+2]}</span>`;
+				}
+			}
+			return eles;
+			//return pad(padding, object.set.substring(0, object.set.indexOf("[")-1), false) + "|"; 
+			//`|<b>${object.item.padEnd(120, " ")}</b>|${object.moves[0].padEnd(12, " ")}|${object.moves[1].padEnd(12, " ")}` +
+			//`|${object.moves[2].padEnd(12, " ")}|${object.moves[3].padEnd(12, " ")}`);
+		}
+	}
+	else if (object.set)
+	{
+		return ["&nbsp;&nbsp;&nbsp;" + object.set];
+	}
+	return ["<b>" + object.text + "</b>"];
+}
+
+function setToOptionDisplay(object)
+{
+	if (moveCalcHidden)
+	{
+		if (object.set)
+		{
+			var phraseHint = $("#hint3").val();
+			var padding = Array(8).join('-');
+			var eles = [object.set.substring(0, object.set.indexOf("[")-1),
+						object.item, object.moves[0], object.moves[1], object.moves[2], object.moves[3]];
+			for (i=0; i < eles.length; i++)
+			{
+				eles[i] = pad(padding, eles[i], false);
+			}
+			var styleCode = "";
+			for (i=0; i < 4; i++)
+			{
+				var movePhrase = getPhrase(object.moves[i]);
+				styleCode = `${styleCode} ${movePhrase}`;
+				if (phraseHint != 0 && phraseHint == movePhrase)
+				{
+					eles[i+2] = `<u>${eles[i+2]}</u>`;
+				}
+				if (spreadsheetColors)
+				{
+					eles[i+2] = `<span title = ${movePhrase} style="color:${phraseColors[movePhrase]}">${eles[i+2]}</span>`;
+				}
+				else
+				{
+					eles[i+2] = `<span title = ${movePhrase}>${eles[i+2]}</span>`;
+				}
+			}
+			var res = `<span title = '${styleCode}'>${eles.join("|")}</span>`;
+			return res;
+			//return pad(padding, object.set.substring(0, object.set.indexOf("[")-1), false) + "|"; 
+			//`|<b>${object.item.padEnd(120, " ")}</b>|${object.moves[0].padEnd(12, " ")}|${object.moves[1].padEnd(12, " ")}` +
+			//`|${object.moves[2].padEnd(12, " ")}|${object.moves[3].padEnd(12, " ")}`);
+		}
+	}
+	else if (object.set)
+	{
+		return ("&nbsp;&nbsp;&nbsp;" + object.set);
+	}
+	return ("<b>" + object.text + "</b>");
+}
+
 function loadDefaultLists() {
 	$(".set-selector").select2({
 		formatResult: function (object) {
-			if (moveCalcHidden)
-			{
-				if (object.set)
-				{
-					var phraseHint = $("#hint3").val();
-					var padding = Array(8).join('-');
-					var eles = [object.set.substring(0, object.set.indexOf("[")-1),
-								object.item, object.moves[0], object.moves[1], object.moves[2], object.moves[3]];
-					for (i=0; i < eles.length; i++)
-					{
-						eles[i] = pad(padding, eles[i], false);
-					}
-					var styleCode = "";
-					for (i=0; i < 4; i++)
-					{
-						var movePhrase = getPhrase(object.moves[i]);
-						styleCode = `${styleCode} ${movePhrase}`;
-						if (phraseHint != 0 && phraseHint == movePhrase)
-						{
-							eles[i+2] = `<u>${eles[i+2]}</u>`;
-						}
-						if (spreadsheetColors)
-						{
-							eles[i+2] = `<span title = ${movePhrase} style="color:${phraseColors[movePhrase]}">${eles[i+2]}</span>`;
-						}
-						else
-						{
-							eles[i+2] = `<span title = ${movePhrase}>${eles[i+2]}</span>`;
-						}
-					}
-					return `<span title = '${styleCode}'>${eles.join("|")}</span>`;
-					//return pad(padding, object.set.substring(0, object.set.indexOf("[")-1), false) + "|"; 
-					//`|<b>${object.item.padEnd(120, " ")}</b>|${object.moves[0].padEnd(12, " ")}|${object.moves[1].padEnd(12, " ")}` +
-					//`|${object.moves[2].padEnd(12, " ")}|${object.moves[3].padEnd(12, " ")}`);
-				}
-			}
-			else if (object.set)
-			{
-				return ("&nbsp;&nbsp;&nbsp;" + object.set);
-			}
-			return ("<b>" + object.text + "</b>");
+			return setToOptionDisplay(object);
 		},
 		query: function (query) {
 			var pageSize = 30;
@@ -1518,6 +1623,16 @@ function loadDefaultLists() {
 					return pokeName.indexOf(term) === 0 || pokeName.indexOf("-" + term) >= 0 || pokeName.indexOf(" " + term) >= 0;
 				});
 			});
+			if (moveCalcHidden)
+			{
+				$("#spreadsheet-display").empty();
+				var r = []
+				for (var i = 0; i < Math.min(results.length, 10); i++)
+				{
+					r.push(setToSpreadsheetDisplay(results[i]));
+				}
+				$("#spreadsheet-display").append(generateTable(r));
+			}
 			query.callback({
 				results: results.slice((query.page - 1) * pageSize, query.page * pageSize),
 				more: results.length >= query.page * pageSize
@@ -1589,6 +1704,10 @@ function loadFromCache()
 	$("#spaceAdjuster2").change();
 	$("#fontAdjuster1").val(localStorage.getItem("fontAdjuster1"));
 	$("#fontAdjuster1").change();
+	$("#spreadsheetAdjusterHor").val(localStorage.getItem("spreadsheetAdjusterHor"));
+	$("#spreadsheetAdjusterHor").change();
+	$("#spreadsheetAdjusterVer").val(localStorage.getItem("spreadsheetAdjusterVer"));
+	$("#spreadsheetAdjusterVer").change();
 	$("#move-calc-results").prop("checked", localStorage.getItem("move-calc-results") == 'true');
 	$("#move-calc-results").change();
 	$("#spreadsheet-colors").prop("checked", localStorage.getItem("spreadsheet-colors") == 'true');
