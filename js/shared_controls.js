@@ -496,10 +496,11 @@ function shallowDictCopy(d)
 
 $(".save-IVs").click(function () {
 	var pokeObj = $(this).closest(".poke-info");
-	var fullSetName = pokeObj.find(".set-selector").text().trim();
+	var setsel = pokeObj.find(".set-selector");
+	var fullSetName = setsel.text().trim();
 	var pokemonName, setName;
-	pokemonName = fullSetName.substring(0, fullSetName.indexOf(" ("));
-	setName = fullSetName.substring(fullSetName.indexOf("(") + 1, fullSetName.lastIndexOf(")"));
+	pokemonName = fullSetName.substring(0, fullSetName.lastIndexOf("-"));
+	setName = fullSetName.substring(0, fullSetName.indexOf("]")+1);
 	if (pokemonName in setdex && setName in setdex[pokemonName])
 	{
 		var set = setdex[pokemonName][setName];
@@ -511,10 +512,12 @@ $(".save-IVs").click(function () {
 		}
 		d.ability = pokeObj.find(".ability").val();
 		d.gender = pokeObj.find(".gender").val();
-		d.nameProp = setName.substring(0, setName.indexOf("[")+1) + pokeObj.find(".save-name").val()
-		+ setName.substring(setName.indexOf("]"), setName.length);
+		d.nameProp = setName.substring(0, setName.indexOf("[")+1) + pokeObj.find(".save-name").val() + "]";
+		//console.log(d.nameProp);
 		d.name = pokemonName;
 		addToDex(d);
+		setsel.val(pokemonName + " (" + d.nameProp + ")");
+		setsel.change();
 	}
 });
 
