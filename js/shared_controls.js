@@ -509,6 +509,8 @@ $(".save-IVs").click(function () {
 		for (i = 0; i < STATS.length; i++) {
 			d.ivs[STATS[i]] = pokeObj.find("." + STATS[i] + " .ivs").val();
 		}
+		d.ability = pokeObj.find(".ability").val();
+		d.gender = pokeObj.find(".gender").val();
 		d.nameProp = setName.substring(0, setName.indexOf("[")+1) + pokeObj.find(".save-name").val()
 		+ setName.substring(setName.indexOf("]"), setName.length);
 		d.name = pokemonName;
