@@ -520,11 +520,6 @@ $("#saveIVsR1").click(function () {
 	var fullSetName = $("#setSelectorR1").val();
 });
 
-$(".set-selector").focus(function () {
-	console.log("HI");
-	$(this).val(searchHistory);
-});
-
 // auto-update set details on select
 $(".set-selector").change(function () {
 	var fullSetName = $(this).val();
@@ -641,6 +636,7 @@ $(".set-selector").change(function () {
 			pokeObj.find(".gender").val("");
 		} else pokeObj.find(".gender").parent().show();
 	}
+	//$(this).text(fullSetName + "<b>HI</b>");
 });
 
 function showFormes(formeObj, setName, pokemonName, pokemon) {
@@ -1121,11 +1117,12 @@ $("#hide-move-calc").change(function () {
 		$("#p2-data").hide(100, function () {});
 		//$(".spreadsheet-sorters").show(100, function () {});
 		$("#p1").hide(100, function () {});
-		$("#p2").width("660px");
+		$("#p2").width("690px");
+		$("#p2").css("top", "-100px");
 
 		//$("#results1").hide(100, function () {});
 		//$("#results2").hide(100, function () {});
-		$("#field-container").css("left", "820px");
+		$("#field-container").css("left", "850px");
 	}
 	else
 	{
@@ -1144,6 +1141,7 @@ $("#hide-move-calc").change(function () {
 		//$(".spreadsheet-sorters").hide(100, function () {});
 		$("#p1").show(100, function () {});
 		$("#p2").width((parseInt($("#spaceAdjuster2").val())/2+300) + "px");
+		$("#p2").css("top", "-40px");
 		$("#field-container").css("left", (parseInt($("#spaceAdjuster2").val())+785) + "px");
 	}
 });
@@ -1201,8 +1199,8 @@ $("#spaceAdjuster2").change(function () {
 	$("#p1").css("width", (parseInt(a)/2+300) + "px");
 	if (moveCalcHidden)
 	{
-		$("#p2").css("width", "660px");
-		$("#field-container").css("left", "820px");
+		$("#p2").css("width", "690px");
+		$("#field-container").css("left", "850px");
 	}
 	else
 	{
@@ -1320,7 +1318,7 @@ function getPhraseCount(pokemon, set, phraseHint)
 			}
 		}
 	}
-	else
+	/*else
 	{			
 		for (i=0; i < 4; i++)
 		{
@@ -1329,7 +1327,7 @@ function getPhraseCount(pokemon, set, phraseHint)
 				phr1 += 1;
 			}
 		}
-	}
+	}*/
 	return phr1;
 }
 
@@ -1559,9 +1557,9 @@ function setToSpreadsheetDisplay(object)
 	}
 	else if (object.set)
 	{
-		return ["&nbsp;&nbsp;&nbsp;" + object.set];
+		return [];//["&nbsp;&nbsp;&nbsp;" + object.set];
 	}
-	return ["<b>" + object.text + "</b>"];
+	return [];//["<b>" + object.text + "</b>"];
 }
 
 function setToOptionDisplay(object)
@@ -1574,10 +1572,7 @@ function setToOptionDisplay(object)
 			var padding = Array(8).join('-');
 			var eles = [object.set.substring(0, object.set.indexOf("[")-1),
 						object.item, object.moves[0], object.moves[1], object.moves[2], object.moves[3]];
-			for (i=0; i < eles.length; i++)
-			{
-				eles[i] = pad(padding, eles[i], false);
-			}
+
 			var styleCode = "";
 			for (i=0; i < 4; i++)
 			{
@@ -1589,14 +1584,21 @@ function setToOptionDisplay(object)
 				}
 				if (spreadsheetColors)
 				{
-					eles[i+2] = `<span title = ${movePhrase} style="color:${phraseColors[movePhrase]}">${eles[i+2]}</span>`;
+					eles[i+2] = `<span title = ${movePhrase}><span style="color:${phraseColors[movePhrase]}">■</span>${eles[i+2]}</span>`;
 				}
 				else
 				{
 					eles[i+2] = `<span title = ${movePhrase}>${eles[i+2]}</span>`;
 				}
 			}
-			var res = `<span title = '${styleCode}'>${eles.join("|")}</span>`;
+			for (i=0; i < eles.length; i++)
+			{
+				//eles[i] = pad(padding, eles[i], false);
+				eles[i] = '<td style="border:1px solid black;">' + eles[i] + '</td>';
+			}
+			var ptext = '<table class="fixed" style="text-align:center;font-size:10px;padding:0px;"><col width="110px" /> <col width="120px" /> <col width="120px" /> <col width="120px" /> <col width="120px" /> <col width="120px" />';
+			var res = ptext + '<tr>'+eles.join("")+'</tr></table>';
+ 			//`<span title = '${styleCode}'>${eles.join("|")}</span>`;
 			return res;
 			//return pad(padding, object.set.substring(0, object.set.indexOf("[")-1), false) + "|"; 
 			//`|<b>${object.item.padEnd(120, " ")}</b>|${object.moves[0].padEnd(12, " ")}|${object.moves[1].padEnd(12, " ")}` +
@@ -1605,15 +1607,41 @@ function setToOptionDisplay(object)
 	}
 	else if (object.set)
 	{
-		return ("&nbsp;&nbsp;&nbsp;" + object.set);
+		var resu = object.text;
+		var item = setdex[object.pokemon][object.set]["item"];
+		if (item_png_path[item])
+			resu = resu + '<img src="graphics/items/icons/'+item_png_path[item]+'" />';
+				var abs = gSpeciesInfo[object.pokemon]["abilities"];
+		if (abs.length  < 2 || abs[1] == "None")
+		{
+			resu = resu + abs[0];
+		}
+		return resu;
 	}
-	return ("<b>" + object.text + "</b>");
+	return false;//("<b>" + object.text + "</b>");
+}
+
+function addImage(state)
+{
+	return jQuery.parseHTML(state.text + '<img src="graphics/items/icons/aspear_berry.png" />');
 }
 
 function loadDefaultLists() {
 	$(".set-selector").select2({
 		formatResult: function (object) {
 			return setToOptionDisplay(object);
+		},
+		formatSelection: function (object) {
+			var resu = object.text;
+			var item = setdex[object.pokemon][object.set]["item"];
+			if (item_png_path[item])
+				resu = resu + '<img src="graphics/items/icons/'+item_png_path[item]+'" />';
+			var abs = gSpeciesInfo[object.pokemon]["abilities"];
+			if (abs.length  < 2 || abs[1] == "None")
+			{
+				resu = resu + abs[0];
+			}
+			return resu;
 		},
 		query: function (query) {
 			var pageSize = 30;
@@ -1730,7 +1758,7 @@ $(document).ready(function () {
 		}
 	});
 	setO = getSetOptions();
-	for (i = 0; i < 4; i++)
+	for (var i = 0; i < 4; i++)
 	{
 		if (setO[i].set)
 		{
@@ -1741,19 +1769,4 @@ $(document).ready(function () {
 	}
 
     $(".terrain-trigger").bind("change keyup", getTerrainEffects);
-	
-	/*var res = {};
-	for(var propertyName in SETDEX_ADV)
-	{
-		var poke = SETDEX_ADV[propertyName];
-		for(var setName in poke)
-		{
-			var item = poke[setName].item;
-			if (item == undefined)
-			{
-				console.log(setName);
-			}
-		}
-	};
-	console.log(res)*/
 });

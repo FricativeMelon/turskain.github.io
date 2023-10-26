@@ -456,6 +456,53 @@ var ITEM_UNUSED_BERRY_3 = 178;
 
 var MAX_BERRY_INDEX = ITEM_UNUSED_BERRY_3;
 
+var item_png_path = 
+{
+	"Aspear Berry" : "aspear_berry.png",
+    "Black Belt" : "black_belt.png",
+    "Black Glasses" : "black_glasses.png",
+    "Bright Powder" : "bright_powder.png",
+    "Charcoal" : "charcoal.png",
+    "Cheri Berry" : "cheri_berry.png",
+    "Chesto Berry" : "chesto_berry.png",
+    "Choice Band" : "choice_band.png",
+    "Deep Sea Scale" : "deep_sea_scale.png",
+    "Focus Band" : "focus_band.png",
+    "Hard Stone" : "hard_stone.png",
+    "King's Rock" : "kings_rock.png",
+    "Lax Incense" : "lax_incense.png",
+    "Leftovers" : "leftovers.png",
+    "Leppa Berry" : "leppa_berry.png",
+    "Liechi Berry" : "liechi_berry.png",
+    "Light Ball" : "light_ball.png",
+    "Lum Berry" : "lum_berry.png",
+    "Magnet" : "magnet.png",
+    "Mental Herb" : "mental_herb.png",
+    "Metal Coat" : "metal_coat.png",
+    "Metal Powder" : "metal_powder.png",
+    "Miracle Seed" : "miracle_seed.png",
+    "Mystic Water" : "mystic_water.png",
+    "NeverMeltIce" : "neverMeltIce.png",
+    "Pecha Berry" : "pecha_berry.png",
+    "Persim Berry" : "persim_berry.png",
+    "Petaya Berry" : "petaya_berry.png",
+    "Poison Barb" : "poison_barb.png",
+    "Quick Claw" : "quick_claw.png",
+    "Rawst Berry" : "rawst_berry.png",
+    "Salac Berry" : "salac_berry.png",
+    "Scope Lens" : "scope_lens.png",
+    "Sharp Beak" : "sharp_beak.png",
+    "Shell Bell" : "shell_bell.png",
+    "Silk Scarf" : "silk_scarf.png",
+    "Silver Powder" : "silver_powder.png",
+    "Sitrus Berry" : "sitrus_berry.png",
+    "Soft Sand" : "soft_sand.png",
+    "Stick" : "stick.png",
+    "Thick Club" : "thick_club.png",
+    "Twisted Spoon" : "twisted_spoon.png",
+    "White Herb" : "white_herb.png",
+}
+
 // Battle Held items
 var ITEM_BRIGHT_POWDER = 179;
 var ITEM_WHITE_HERB = 180;

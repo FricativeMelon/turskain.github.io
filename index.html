@@ -40,10 +40,10 @@
 		 <input type="range" min="0" max="150" value="100" style="width:50px" class="slider" id="spaceAdjuster2">
 		 <input type="checkbox" id="move-calc-results" />
 		 <input type="range" min="6" max="14" value="10" style="width:50px" class="slider" id="fontAdjuster1">
+		 <input type="checkbox" id="hide-move-calc" />Spreadsheet
+		<input type="checkbox" id="spreadsheet-colors" />Colors
 		 </div>
 		 <div>
-			<input type="checkbox" id="hide-move-calc" />Spreadsheet
-			<input type="checkbox" id="spreadsheet-colors" />Colors
 			<input hidden type="range" min="400" max="900" value="150" style="width:100px" class="slider" id="spreadsheetAdjusterHor">
 			<input hidden type="range" min="0" max="300" value="100" style="width:100px" class="slider" id="spreadsheetAdjusterVer">
 		 </div>
@@ -54,6 +54,8 @@
             <input class="mode visually-hidden" type="radio" name="mode" id="all-vs-one" /><label class="btn btn-wide btn-right" for="all-vs-one">All vs One</label>
         </span>
     </div>
+	
+	<div id = "placeholder2" style="height:50px;"></div>
 	
 	<div aria-label="Calculation results" class="main-result-group" id = "results1" role="region" style="font-size:10px;position:relative;top:10px">
         <div class="big-text"><span id="mainResult1">Loading...</span>
@@ -1245,7 +1247,7 @@
         </fieldset>
     </div>
 
-	<div id = "field-container" style = "position:absolute; top:220px; left:885px">
+	<div id = "field-container" style = "position:absolute; top:270px; left:885px">
 		<div class="info-group spreadsheet-sorters">
 			<input class="round-hint" id="hint1" style="width: 30px" type="number" min="0" max="64" step="1" value="1" />
 			<select class="type-hint" id="hint2"></select>
