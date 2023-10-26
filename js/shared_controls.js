@@ -1123,23 +1123,23 @@ $("#hide-move-calc").change(function () {
 		//$(".spreadsheet-sorters").show(100, function () {});
 		$("#p1").hide(100, function () {});
 		$("#p2").width("690px");
-		$("#p2").css("top", "-100px");
+		$("#p2").css("top", 150-parseInt($("#spaceAdjuster3").val()) + "px");
 
-		//$("#results1").hide(100, function () {});
-		//$("#results2").hide(100, function () {});
+		$("#results1").hide(100, function () {});
+		$("#results2").hide(100, function () {});
 		$("#field-container").css("left", "850px");
 	}
 	else
 	{
 		if (moveCalcResults)
 		{
-			//$("#results1").hide(100, function () {});
-			//$("#results2").show(100, function () {});
+			$("#results1").hide(100, function () {});
+			$("#results2").show(100, function () {});
 		}
 		else
 		{
-			//$("#results1").show(100, function () {});
-			//$("#results2").hide(100, function () {});
+			$("#results1").show(100, function () {});
+			$("#results2").hide(100, function () {});
 		}
 		$(".move-result-group").show(100, function () {});
 		$("#p2-data").show(100, function () {});
@@ -1155,6 +1155,8 @@ $("#move-calc-results").change(function () {
 	var a = this.checked;
 	localStorage.setItem("move-calc-results", a);
 	moveCalcResults = this.checked;
+	if (moveCalcHidden)
+		return;
 	if (this.checked)
 	{
 		$("#results1").hide(100, function () {});
@@ -1211,6 +1213,19 @@ $("#spaceAdjuster2").change(function () {
 	{
 		$("#p2").css("width", (parseInt(a)/2+300) + "px");
 		$("#field-container").css("left", (parseInt(a)+785) + "px");
+	}
+});
+
+$("#spaceAdjuster3").change(function () {
+	var a = $(this).val();
+	localStorage.setItem("spaceAdjuster3", a);
+	if (moveCalcHidden)
+	{
+		$("#p2").css("top", 150-parseInt(a) + "px");
+	}
+	else
+	{
+		//$("#p2").css("top", parseInt(a) + "px");
 	}
 });
 
@@ -1735,6 +1750,8 @@ function loadFromCache()
 	$("#spaceAdjuster1").change();
 	$("#spaceAdjuster2").val(localStorage.getItem("spaceAdjuster2"));
 	$("#spaceAdjuster2").change();
+	$("#spaceAdjuster3").val(localStorage.getItem("spaceAdjuster3"));
+	$("#spaceAdjuster3").change();
 	$("#fontAdjuster1").val(localStorage.getItem("fontAdjuster1"));
 	$("#fontAdjuster1").change();
 	$("#spreadsheetAdjusterHor").val(localStorage.getItem("spreadsheetAdjusterHor"));
