@@ -1709,13 +1709,28 @@ function loadDefaultLists() {
    // this part is responsible for setting last search when select2 is opening
 	$('.set-selector').on('select2-open', function () {
 		if (moveCalcHidden && searchHistory) {
-			$('.select2-search').find('input').val(searchHistory).trigger("paste");
+			var xin = $('.select2-search').find('input');
+			xin.val(searchHistory).trigger("paste");
+			xin[xin.length-1].setSelectionRange(0, searchHistory.length);
 		}
 	});
 	$('.select2-search').on('keyup', function () {
 		if (moveCalcHidden)	searchHistory = $(this).find('input').val();
 	});
 }
+
+
+/*
+.select2-selection__rendered {
+    //line-height: 31px !important;
+}
+.select2-container .select2-selection--single {
+    //height: 35px !important;
+}
+.select2-selection__arrow {
+    //height: 34px !important;
+}*/
+
 
 function bothPokemon(selector) {
 	return "#p1 " + selector + ", #p2 " + selector;

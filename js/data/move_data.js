@@ -515,7 +515,7 @@ var MOVES_RBY = {
         makesContact: true,
         pp: 20
     },
-    'Self-Destruct': {
+    'Selfdestruct': {
         bp: 130,
         type: 'Normal',
         category: 'Physical',
@@ -558,7 +558,7 @@ var MOVES_RBY = {
         type: 'Poison',
         pp: 20
     },
-    'Soft-Boiled': {
+    'Softboiled': {
         bp: 0,
         type: 'Normal',
         pp: 10
@@ -1165,7 +1165,7 @@ var MOVES_GSC = $.extend(true, {}, MOVES_RBY, {
         type: 'Normal',
         pp: 10
     },
-	'Self-Destruct': {bp: 200},
+	'Selfdestruct': {bp: 200},
 	'Shadow Ball': {
 		bp: 80,
 		type: 'Ghost',
@@ -1233,8 +1233,10 @@ var MOVES_GSC = $.extend(true, {}, MOVES_RBY, {
         pp: 25
 	},
 	'Struggle': {
+	bp: 50,
 	type: 'None',
-	hasRecoil: 25
+	hasRecoil: 25,
+	pp: 1
 	},
 	'Sunny Day': {
 		bp: 0,
@@ -1306,7 +1308,7 @@ var MOVES_ADV = $.extend(true, {}, MOVES_GSC, {
 		category: 'Special',
 		givesHealth: true,
         percentHealed: 0.5,
-		pp: 25
+		pp: 20
 	},
 	'Confusion': {
 		bp: 50,
@@ -1343,7 +1345,7 @@ var MOVES_ADV = $.extend(true, {}, MOVES_GSC, {
 	'Growth': {
 		bp: 0,
 		type: 'Normal',
-		pp: 20
+		pp: 40
 	},
 	'Present': {
 		bp: 0,
@@ -1388,10 +1390,10 @@ var MOVES_ADV = $.extend(true, {}, MOVES_GSC, {
 		pp: 15
 	},
 	'Petal Dance': {
-		bp: 120,
+		bp: 70,
 		type: 'Grass',
 		category: 'Special',
-		pp: 10
+		pp: 20
 	},
 	'Octazooka': {
 		bp: 65,
@@ -1423,10 +1425,10 @@ var MOVES_ADV = $.extend(true, {}, MOVES_GSC, {
 		pp: 35
 	},
 	'Outrage': {
-		bp: 120,
+		bp: 90,
 		type: 'Dragon',
 		category: 'Special',
-		pp: 10
+		pp: 15
 	},
 	'Psywave': {
 		bp: 0,
@@ -2065,7 +2067,7 @@ var MOVES_ADV = $.extend(true, {}, MOVES_GSC, {
 		type: 'Normal',
         pp: 10
 	},
-	'Smelling Salts': {
+	'Smelling Salt': {
         bp: 70,
         type: 'Normal',
         category: 'Physical',
@@ -4622,7 +4624,7 @@ var MOVES_SM = $.extend(true, {}, MOVES_XY, {
 	'Seed Bomb': {zp: 160},
 	'Seed Flare': {zp: 190},
 	'Seismic Toss': {zp: 100},
-	'Self-Destruct': {zp: 200},
+	'Selfdestruct': {zp: 200},
 	'Shadow Claw': {zp: 140},
 	'Shadow Force': {zp: 190},
 	'Shadow Sneak': {zp: 100},
