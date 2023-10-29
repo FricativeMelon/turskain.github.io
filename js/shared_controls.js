@@ -624,6 +624,11 @@ $(".set-selector").change(function () {
 				moveObj.change();
 			}
 		}
+		var ab = gSpeciesInfo[pokemonName]["abilities"];
+		if (ab[1] == ABILITY_NONE)
+		{
+			abilityObj.val(ab[0]);
+		}
 		var formeObj = $(this).siblings().find(".forme").parent();
 		itemObj.prop("disabled", false);
 		if (pokemon.formes) {
