@@ -1582,6 +1582,16 @@ function setToSpreadsheetDisplay(object)
 	return [];//["<b>" + object.text + "</b>"];
 }
 
+function evSlashFormat(evs)
+{
+	return `${evs['hp']}/${evs['at']}/${evs['df']}/${evs['sa']}/${evs['sd']}/${evs['sp']}`;
+}
+
+function moveSlashFormat(moves)
+{
+	return `${moves[0]}/${moves[1]}/${moves[2]}/${moves[3]}`;
+}
+
 function setToOptionDisplay(object)
 {
 	if (moveCalcHidden)
@@ -1594,6 +1604,8 @@ function setToOptionDisplay(object)
 						object.item, object.moves[0], object.moves[1], object.moves[2], object.moves[3]];
 
 			var styleCode = "";
+			var evs = setdex[object.pokemon][object.set]["evs"];
+			eles[0] = `<span title = "${evSlashFormat(evs)}">` + eles[0]+"</span>"
 			for (i=0; i < 4; i++)
 			{
 				var movePhrase = getPhrase(object.moves[i]);
@@ -1616,8 +1628,9 @@ function setToOptionDisplay(object)
 				//eles[i] = pad(padding, eles[i], false);
 				eles[i] = '<td style="border:1px solid black;">' + eles[i] + '</td>';
 			}
-			var ptext = '<table class="fixed" style="text-align:center;font-size:10px;padding:0px;"><col width="110px" /> <col width="120px" /> <col width="120px" /> <col width="120px" /> <col width="120px" /> <col width="120px" />';
-			var res = ptext + '<tr>'+eles.join("")+'</tr></table>';
+			var res = '<table class="fixed" style="text-align:center;font-size:10px;padding:0px;"><col width="110px" /> <col width="120px" /> <col width="120px" /> <col width="120px" /> <col width="120px" /> <col width="120px" />';
+			res = res +`<tr>`;
+			res = res+eles.join("")+'</tr></table>';
  			//`<span title = '${styleCode}'>${eles.join("|")}</span>`;
 			return res;
 			//return pad(padding, object.set.substring(0, object.set.indexOf("[")-1), false) + "|"; 
@@ -1626,8 +1639,9 @@ function setToOptionDisplay(object)
 		}
 	}
 	else if (object.set)
-	{
-		var resu = object.text;
+	{	
+		var evs = setdex[object.pokemon][object.set]["evs"];
+		var resu = `<span title="${moveSlashFormat(object.moves)}/${evSlashFormat(evs)}">`+object.text+'</span>';
 		var item = setdex[object.pokemon][object.set]["item"];
 		if (item_png_path[item])
 			resu = resu + '<img src="graphics/items/icons/'+item_png_path[item]+'" />';
