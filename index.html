@@ -36,13 +36,12 @@
          </span>
 		 <!--<input type = "checkbox" id = "settings-toggle" title="Toggle settings."> Hide settings-->
 		 <div id = "settings" >
-		 <input type="range" min="0" max="300" value="150" style="width:100px" class="slider" id="spaceAdjuster1">
-		 <input type="range" min="0" max="150" value="100" style="width:50px" class="slider" id="spaceAdjuster2">
-		 <input type="checkbox" id="move-calc-results" />
-		 <input type="range" min="6" max="14" value="10" style="width:50px" class="slider" id="fontAdjuster1">
-		 <input type="checkbox" id="hide-move-calc" />Spreadsheet
-		 <input type="range" min="0" max="200" value="100" style="width:100px" class="slider" id="spaceAdjuster3">
-		<input type="checkbox" id="spreadsheet-colors" />Colors
+		 <input title="Move moves selection left and right" type="range" min="0" max="300" value="150" style="width:100px" class="slider" id="spaceAdjuster1">
+		 <input title="Change width of pokemon summaries" type="range" min="0" max="150" value="100" style="width:50px" class="slider" id="spaceAdjuster2">
+		 <input title="Move calc results back down" type="checkbox" id="move-calc-results" />
+		 <input title="Change calc result font" type="range" min="6" max="14" value="10" style="width:50px" class="slider" id="fontAdjuster1">
+		 <input title="Move spreadsheet up and down" type="range" min="0" max="200" value="100" style="width:100px" class="slider" id="spaceAdjuster3">
+		<input title="Add colors for phrases in spreadsheet" type="checkbox" id="spreadsheet-colors" />Colors
 		 </div>
 		 <div>
 			<input hidden type="range" min="400" max="900" value="150" style="width:100px" class="slider" id="spreadsheetAdjusterHor">
@@ -1248,7 +1247,7 @@
         </fieldset>
     </div>
 
-	<div id = "field-container" style = "position:absolute; top:240px; left:885px">
+	<div id = "field-container" style = "position:absolute; top:250px; left:885px">
 		<div class="info-group spreadsheet-sorters">
 			<input class="round-hint" id="hint1" style="width: 30px" type="number" min="0" max="64" step="1" value="1" />
 			<select class="type-hint" id="hint2"></select>
@@ -1264,6 +1263,7 @@
 				<option style="color:#999999" value = 8>Adapt</option>
 			</select>
 			<div style="position:relative;top:0px"><b>Round # + Hints</b></div>
+			<input type="checkbox" id="hide-move-calc" />Spreadsheet
 		</div>
 		<div class="panel">
 			<div aria-label="Field information" role="region">

@@ -1610,7 +1610,7 @@ function setToOptionDisplay(object)
 
 			var styleCode = "";
 			var evs = setdex[object.pokemon][object.set]["evs"];
-			eles[0] = `<span title = "${evSlashFormat(evs)}">` + eles[0]+"</span>"
+			eles[0] = `<span title = "${evSlashFormat(evs)}"><b>` + eles[0]+"</b></span>"
 			for (i=0; i < 4; i++)
 			{
 				var movePhrase = getPhrase(object.moves[i]);
@@ -1621,7 +1621,7 @@ function setToOptionDisplay(object)
 				}
 				if (spreadsheetColors)
 				{
-					eles[i+2] = `<span title = ${movePhrase}><span style="color:${phraseColors[movePhrase]}">■</span>${eles[i+2]}</span>`;
+					eles[i+2] = `<span title = ${movePhrase}><span style="color:${phraseColors[movePhrase]}">${eles[i+2]}</span></span>`;
 				}
 				else
 				{
@@ -1633,7 +1633,7 @@ function setToOptionDisplay(object)
 				//eles[i] = pad(padding, eles[i], false);
 				eles[i] = '<td style="border:1px solid black;">' + eles[i] + '</td>';
 			}
-			var res = '<table class="fixed" style="text-align:center;font-size:10px;padding:0px;"><col width="110px" /> <col width="120px" /> <col width="120px" /> <col width="120px" /> <col width="120px" /> <col width="120px" />';
+			var res = '<table class="fixed" style="text-align:center;font-size:10px;padding:0px;border-spacing:0px;"><col width="110px" /> <col width="120px" /> <col width="120px" /> <col width="120px" /> <col width="120px" /> <col width="120px" />';
 			res = res +`<tr>`;
 			res = res+eles.join("")+'</tr></table>';
  			//`<span title = '${styleCode}'>${eles.join("|")}</span>`;
@@ -1800,11 +1800,11 @@ function loadFromCache()
 }
 
 $(document).ready(function () {
-	loadFromCache();
 	$("#gen3").prop("checked", true);
 	$("#gen3").change();
 	$("#percentage").prop("checked", true);
 	$("#percentage").change();
+	loadFromCache();
 	loadDefaultLists();
 	$(".move-selector").select2({
 		dropdownAutoWidth: true,
