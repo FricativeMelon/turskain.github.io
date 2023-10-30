@@ -955,7 +955,7 @@ function Side(format, terrain, weather, isGravity, isSR, spikes, isReflect, isLi
 }
 
 var gen, genWasChanged, notation, pokedex, setdex, typeChart, moves, abilities, items, STATS, calcHP, calcStat;
-var recentSets, moveCalcHidden, moveCalcResults, searchHistory, spreadsheetColors, settingsHidden;
+var recentSets, moveCalcHidden, moveCalcResults, searchHistory, spreadsheetColors, settingsHidden, spreadsheetFont;
 
 $(".gen").change(function () {
 	gen = ~~$(this).val();
@@ -963,6 +963,7 @@ $(".gen").change(function () {
 	recentSets = [];
 	moveCalcHidden = false;
 	spreadsheetColors = false;
+	spreadsheetFont = 12;
 	switch (gen) {
 	case 1:
 		pokedex = POKEDEX_RBY;
@@ -1203,6 +1204,12 @@ $("#fontAdjuster1").change(function () {
 	localStorage.setItem("fontAdjuster1", a);
 	$("#results1").css("font-size", a+"px");
 	$("#results2").css("font-size", a+"px");
+});
+
+$("#fontAdjuster2").change(function () {
+	var a = $(this).val();
+	localStorage.setItem("fontAdjuster2", a);
+	spreadsheetFont = a;
 });
 
 $("#spaceAdjuster2").change(function () {
@@ -1633,7 +1640,7 @@ function setToOptionDisplay(object)
 				//eles[i] = pad(padding, eles[i], false);
 				eles[i] = '<td style="border:1px solid black;">' + eles[i] + '</td>';
 			}
-			var res = '<table class="fixed" style="text-align:center;font-size:10px;padding:0px;border-spacing:0px;"><col width="110px" /> <col width="120px" /> <col width="120px" /> <col width="120px" /> <col width="120px" /> <col width="120px" />';
+			var res = '<table class="fixed" style="text-align:center;padding:0px;border-spacing:0px;"><col width="110px" /> <col width="120px" /> <col width="120px" /> <col width="120px" /> <col width="120px" /> <col width="120px" />';
 			res = res +`<tr>`;
 			res = res+eles.join("")+'</tr></table>';
  			//`<span title = '${styleCode}'>${eles.join("|")}</span>`;
@@ -1658,11 +1665,6 @@ function setToOptionDisplay(object)
 		return resu;
 	}
 	return false;//("<b>" + object.text + "</b>");
-}
-
-function addImage(state)
-{
-	return jQuery.parseHTML(state.text + '<img src="graphics/items/icons/aspear_berry.png" />');
 }
 
 function loadDefaultLists() {
@@ -1713,6 +1715,13 @@ function loadDefaultLists() {
 	
    // this part is responsible for setting last search when select2 is opening
 	$('.set-selector').on('select2-open', function () {
+		if (moveCalcHidden)
+		{
+			var elems = $(".select2-results-dept-0");
+			elems.css("height", spreadsheetFont+"px");
+			elems.css("line-height", (spreadsheetFont-2)+"px");
+			elems.css("font-size", (spreadsheetFont-6)+"px");
+		}
 		if (moveCalcHidden && searchHistory) {
 			var xin = $('.select2-search').find('input');
 			xin.val(searchHistory).trigger("paste");
@@ -1788,6 +1797,8 @@ function loadFromCache()
 	$("#spaceAdjuster3").change();
 	$("#fontAdjuster1").val(localStorage.getItem("fontAdjuster1"));
 	$("#fontAdjuster1").change();
+	$("#fontAdjuster2").val(localStorage.getItem("fontAdjuster2"));
+	$("#fontAdjuster2").change();
 	$("#spreadsheetAdjusterHor").val(localStorage.getItem("spreadsheetAdjusterHor"));
 	$("#spreadsheetAdjusterHor").change();
 	$("#spreadsheetAdjusterVer").val(localStorage.getItem("spreadsheetAdjusterVer"));
