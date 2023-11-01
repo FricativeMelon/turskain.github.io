@@ -1039,7 +1039,7 @@ function Side(format, terrain, weather, isGravity, isSR, spikes, isReflect, isLi
 }
 
 var gen, genWasChanged, notation, pokedex, setdex, typeChart, moves, abilities, items, STATS, calcHP, calcStat;
-var recentSets, moveCalcHidden, moveCalcResults, searchHistory, spreadsheetColors, settingsHidden, spreadsheetFont;
+var recentSets, moveCalcHidden, moveCalcResults, searchHistory, spreadsheetColors, settingsHidden, spreadsheetFont, openLevel;
 
 $(".gen").change(function () {
 	gen = ~~$(this).val();
@@ -1265,6 +1265,12 @@ $("#spreadsheet-colors").change(function () {
 	spreadsheetColors = this.checked;
 });
 
+$("#open-level").change(function () {
+	var a = this.checked;
+	localStorage.setItem("open-level", a);
+	openLevel = this.checked;
+});
+
 $("#spaceAdjuster1").change(function () {
 	var a = $(this).val();
 	localStorage.setItem("spaceAdjuster1", a);
@@ -1385,7 +1391,13 @@ var legendPokeAll = legendPoke1.concat(legendPoke2, legendPoke3);
 
 function isPokeInRound(pokemon, set, round)
 {
-	round = parseInt(round);
+	var monNum = parseInt(set.substring(set.indexOf("[")+1, set.indexOf("]")))-1;
+	if (openLevel)
+	{
+		return monNum >= factoryMonsLvl100[Math.min(round, 8)-1][0] && monNum <= factoryMonsLvl100[Math.min(round, 8)-1][1];
+	}
+	return monNum >= factoryMonsLvl50[Math.min(round, 8)-1][0] && monNum <= factoryMonsLvl50[Math.min(round, 8)-1][1] && monNum != 126;
+	/*round = parseInt(round);
 	if (round == 0)
 		return true;
 	var setNum = set[set.indexOf("[")-2];
@@ -1418,7 +1430,7 @@ function isPokeInRound(pokemon, set, round)
 			return setCount > 2 && setNum == "4";
 		default:
 			return setCount > 2 && setNum != "s";
-	}
+	}*/
 }
 
 function getPhraseCount(pokemon, set, phraseHint)
@@ -1776,7 +1788,6 @@ function loadDefaultLists() {
 					return pokeName.indexOf(term) === 0 || pokeName.indexOf("-" + term) >= 0 || pokeName.indexOf(" " + term) >= 0;
 				});
 			});
-			console.log(results);
 			if (moveCalcHidden)
 			{
 				$("#spreadsheet-display").empty();
@@ -1892,6 +1903,9 @@ function loadFromCache()
 	$("#move-calc-results").change();
 	$("#spreadsheet-colors").prop("checked", localStorage.getItem("spreadsheet-colors") == 'true');
 	$("#spreadsheet-colors").change();
+	
+	$("#open-level").prop("checked", localStorage.getItem("open-level") == 'true');
+	$("#open-level").change();
 
 }
 
