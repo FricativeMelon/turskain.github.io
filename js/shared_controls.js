@@ -404,9 +404,93 @@ function autosetStatus(p, item) {
 
 $(".status").bind("keyup change", function () {
 	if ($(this).val() === 'Badly Poisoned') {
-		$(this).parent().children(".toxic-counter").show();
+		$(this).parent().parent().find(".toxic-counter").show();
 	} else {
-		$(this).parent().children(".toxic-counter").hide();
+		$(this).parent().parent().find(".toxic-counter").hide();
+	}
+});
+
+$("#clear").change(function () {
+	if ($(this).prop("checked")) {
+		var x = $(this).parent().parent().find("#notes-weather");
+		x.hide();
+	}
+});
+
+$("#sun").change(function () {
+	if ($(this).prop("checked")) {
+		var x = $(this).parent().parent().find("#notes-weather");
+		x.css("left", "105px");
+		x.show();
+	}
+});
+
+$("#rain").change(function () {
+	if ($(this).prop("checked")) {
+		var x = $(this).parent().parent().find("#notes-weather");
+		x.css("left", "165px");
+		x.show();
+	}
+});
+
+$("#sand").change(function () {
+	if ($(this).prop("checked")) {
+		var x = $(this).parent().parent().find("#notes-weather");
+		x.css("left", "225px");
+		x.show();
+	}
+});
+
+$("#hail").change(function () {
+	if ($(this).prop("checked")) {
+		var x = $(this).parent().parent().find("#notes-weather");
+		x.css("left", "280px");
+		x.show();
+	}
+});
+
+$("#reflectL").change(function () {
+	var x = $("#notes-reflectL");
+	if ($(this).prop("checked"))
+	{
+		x.show();
+	}
+	else
+	{
+		x.hide();
+	}
+});
+
+$("#reflectR").change(function () {
+	var x = $("#notes-reflectR");
+	if ($(this).prop("checked")) {
+		x.show();
+	}
+	else
+	{
+		x.hide();
+	}
+});
+
+$("#lightScreenL").change(function () {
+	var x = $("#notes-lightScreenL");
+	if ($(this).prop("checked")) {
+		x.show();
+	}
+	else
+	{
+		x.hide();
+	}
+});
+
+$("#lightScreenR").change(function () {
+	var x = $("#notes-lightScreenR");
+	if ($(this).prop("checked")) {
+		x.show();
+	}
+	else
+	{
+		x.hide();
 	}
 });
 
@@ -1692,6 +1776,7 @@ function loadDefaultLists() {
 					return pokeName.indexOf(term) === 0 || pokeName.indexOf("-" + term) >= 0 || pokeName.indexOf(" " + term) >= 0;
 				});
 			});
+			console.log(results);
 			if (moveCalcHidden)
 			{
 				$("#spreadsheet-display").empty();
@@ -1717,10 +1802,10 @@ function loadDefaultLists() {
 	$('.set-selector').on('select2-open', function () {
 		if (moveCalcHidden)
 		{
-			var elems = $(".select2-results-dept-0");
-			elems.css("height", spreadsheetFont+"px");
-			elems.css("line-height", (spreadsheetFont-2)+"px");
-			elems.css("font-size", (spreadsheetFont-6)+"px");
+			var elems = $(".select2-results");
+			elems.removeClass("select2-results-size-10 select2-results-size-11 select2-results-size-12 select2-results-size-13 select2-results-size-14 "+
+			"select2-results-size-15 select2-results-size-16 select2-results-size-17 select2-results-size-18 select2-results-size-19")
+			elems.addClass("select2-results-size-" + spreadsheetFont);
 		}
 		if (moveCalcHidden && searchHistory) {
 			var xin = $('.select2-search').find('input');

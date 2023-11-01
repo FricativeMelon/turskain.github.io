@@ -42,7 +42,7 @@
 		 <input title="Change calc result font" type="range" min="6" max="14" value="10" style="width:50px" class="slider" id="fontAdjuster1">
 		 <input title="Move spreadsheet up and down" type="range" min="0" max="200" value="100" style="width:100px" class="slider" id="spaceAdjuster3">
 		<input title="Add colors for phrases in spreadsheet" type="checkbox" id="spreadsheet-colors" />Colors
-		<input title="Change spreadsheet font" type="range" min="10" max="20" value="15" style="width:50px" class="slider" id="fontAdjuster2">
+		<input title="Change spreadsheet font" type="range" min="10" max="19" value="15" style="width:50px" class="slider" id="fontAdjuster2">
 		 </div>
 		 <div>
 			<input hidden type="range" min="400" max="900" value="150" style="width:100px" class="slider" id="spreadsheetAdjusterHor">
@@ -200,41 +200,8 @@
 							</select>
 						</div>
 					</td>
-					<td>
-						<div>
-							<label for="statusL1">Status</label>
-						</div>
-					</td>
-					<td>
-						<div>
-							<select class="status calc-trigger" id="statusL1">
-								<option value="Healthy">Healthy</option>
-								<option value="Poisoned">Poisoned</option>
-								<option value="Badly Poisoned">Badly Poisoned</option>
-								<option value="Burned">Burned</option>
-								<option value="Paralyzed">Paralyzed</option>
-								<option value="Asleep">Asleep</option>
-								<option value="Frozen">Frozen</option>
-							</select>
-							<select aria-label="Toxic counter" class="toxic-counter calc-trigger hide">
-								<option value="1">1/16</option>
-								<option value="2">2/16</option>
-								<option value="3">3/16</option>
-								<option value="4">4/16</option>
-								<option value="5">5/16</option>
-								<option value="6">6/16</option>
-								<option value="7">7/16</option>
-								<option value="8">8/16</option>
-								<option value="9">9/16</option>
-								<option value="10">10/16</option>
-								<option value="11">11/16</option>
-								<option value="12">12/16</option>
-								<option value="13">13/16</option>
-								<option value="14">14/16</option>
-								<option value="15">15/16</option>
-							</select>
-						</div>
-					</td>
+                    <td><label>Gender</label></td>
+                    <td><select class="gender calc-trigger"><option></option><option selected="selected">Male</option><option>Female</option></select></td>
 					</tr>
 					<tr>
 					<td>
@@ -522,6 +489,50 @@
                     </tbody>
                 </table>
             </div>
+			<table style="width: 100%;table-layout:fixed;">
+					<colgroup>
+					<col span="1" style="width: 15%;">
+					<col span="1" style="width: 35%;">
+					<col span="1" style="width: 30%;">
+				</colgroup>
+			<tbody>
+			<tr>
+			<td>
+				<label for="statusL1">Status</label>
+			</td>
+			<td>
+				<select class="status calc-trigger" id="statusL1">
+					<option value="Healthy">Healthy</option>
+					<option value="Poisoned">Poisoned</option>
+					<option value="Badly Poisoned">Badly Poisoned</option>
+					<option value="Burned">Burned</option>
+					<option value="Paralyzed">Paralyzed</option>
+					<option value="Asleep">Asleep</option>
+					<option value="Frozen">Frozen</option>
+				</select>
+			</td>
+			<td>
+				<select aria-label="Toxic counter" class="toxic-counter calc-trigger hide">
+					<option value="1">1/16</option>
+					<option value="2">2/16</option>
+					<option value="3">3/16</option>
+					<option value="4">4/16</option>
+					<option value="5">5/16</option>
+					<option value="6">6/16</option>
+					<option value="7">7/16</option>
+					<option value="8">8/16</option>
+					<option value="9">9/16</option>
+					<option value="10">10/16</option>
+					<option value="11">11/16</option>
+					<option value="12">12/16</option>
+					<option value="13">13/16</option>
+					<option value="14">14/16</option>
+					<option value="15">15/16</option>
+				</select>
+			</td>
+			</tr>
+			</tbody>
+			</table>
             <div class="info-group">
                 <label for="currentHpL1">Current HP</label>
                 <input class="current-hp calc-trigger" id="currentHpL1" value="341" />/<span class="max-hp">341</span> (
@@ -678,10 +689,6 @@
                     <label>Forme</label>
                     <select class="forme calc-trigger"></select>
                 </div>
-                <div class="hide">
-                    <label>Gender</label>
-                    <select class="gender calc-trigger"><option></option><option selected="selected">Male</option><option>Female</option></select>
-                </div>
 
                 <div class="hide">
                     <label for="weightL1">Weight (kg)</label>
@@ -766,41 +773,8 @@
 								</select>
 							</div>
 						</td>
-						<td>
-							<div>
-								<label for="statusR1">Status</label>
-							</div>
-						</td>
-						<td>
-							<div>
-								<select class="status calc-trigger" id="statusR1">
-									<option value="Healthy">Healthy</option>
-									<option value="Poisoned">Poisoned</option>
-									<option value="Badly Poisoned">Badly Poisoned</option>
-									<option value="Burned">Burned</option>
-									<option value="Paralyzed">Paralyzed</option>
-									<option value="Asleep">Asleep</option>
-									<option value="Frozen">Frozen</option>
-								</select>
-								<select aria-label="Toxic counter" class="toxic-counter calc-trigger hide">
-									<option value="1">1/16</option>
-									<option value="2">2/16</option>
-									<option value="3">3/16</option>
-									<option value="4">4/16</option>
-									<option value="5">5/16</option>
-									<option value="6">6/16</option>
-									<option value="7">7/16</option>
-									<option value="8">8/16</option>
-									<option value="9">9/16</option>
-									<option value="10">10/16</option>
-									<option value="11">11/16</option>
-									<option value="12">12/16</option>
-									<option value="13">13/16</option>
-									<option value="14">14/16</option>
-									<option value="15">15/16</option>
-								</select>
-							</div>
-						</td>
+						<td><label>Gender</label></td>
+                        <td><select class="gender calc-trigger"><option></option><option selected="selected">Male</option><option>Female</option></select></td>
 						</tr>
 						<tr>
 						<td>
@@ -1080,6 +1054,50 @@
 						</tbody>
 					</table>
 				</div>
+				<table style="width: 100%;table-layout:fixed;">
+						<colgroup>
+						<col span="1" style="width: 15%;">
+						<col span="1" style="width: 35%;">
+						<col span="1" style="width: 30%;">
+					</colgroup>
+				<tbody>
+				<tr>
+				<td>
+					<label for="statusL2">Status</label>
+				</td>
+				<td>
+					<select class="status calc-trigger" id="statusL2">
+						<option value="Healthy">Healthy</option>
+						<option value="Poisoned">Poisoned</option>
+						<option value="Badly Poisoned">Badly Poisoned</option>
+						<option value="Burned">Burned</option>
+						<option value="Paralyzed">Paralyzed</option>
+						<option value="Asleep">Asleep</option>
+						<option value="Frozen">Frozen</option>
+					</select>
+				</td>
+				<td>
+					<select aria-label="Toxic counter" class="toxic-counter calc-trigger hide">
+						<option value="1">1/16</option>
+						<option value="2">2/16</option>
+						<option value="3">3/16</option>
+						<option value="4">4/16</option>
+						<option value="5">5/16</option>
+						<option value="6">6/16</option>
+						<option value="7">7/16</option>
+						<option value="8">8/16</option>
+						<option value="9">9/16</option>
+						<option value="10">10/16</option>
+						<option value="11">11/16</option>
+						<option value="12">12/16</option>
+						<option value="13">13/16</option>
+						<option value="14">14/16</option>
+						<option value="15">15/16</option>
+					</select>
+				</td>
+				</tr>
+				</tbody>
+				</table>
 				<div class="info-group">
 					<label for="currentHpR1">Current HP</label>
 					<input class="current-hp calc-trigger" id="currentHpR1" value="341" />/<span class="max-hp">341</span> (
@@ -1235,10 +1253,6 @@
                     <select class="forme calc-trigger"></select>
                 </div>
                 <div class="hide">
-                    <label>Gender</label>
-                    <select class="gender calc-trigger"><option></option><option selected="selected">Male</option><option>Female</option></select>
-                </div>
-                <div class="hide">
                     <label for="weightR1">Weight (kg)</label>
                     <input class="weight calc-trigger" id="weightR1" value="10.0" />
                 </div>
@@ -1303,6 +1317,9 @@
 							<label class="btn btn-small btn-mid" for="sand">Sand</label>
 							<input class="visually-hidden calc-trigger" type="radio" name="weather" value="Hail" id="hail" />
 							<label class="btn btn-small btn-right" for="hail">Hail</label>
+						</div>
+						<div>
+							<input hidden class="" id="notes-weather" value=0 style="width: 30px;position:relative;left:100px" type="number" min="0" max="5" step="1" title=""/>
 						</div>
 						<div class="gen-specific g6 g7" style="width: 21.1em; margin: 5px auto;" title="Select the current weather condition.">
 							<input class="visually-hidden calc-trigger" type="radio" name="weather" value="Harsh Sunshine" id="harsh-sunshine" />
@@ -1379,6 +1396,14 @@
 							<input class="btn-input calc-trigger" type="checkbox" id="lightScreenR" /><label class="btn btn-xwide btn-right" for="lightScreenR">Light Screen</label>
 						</div>
 					</div>
+				<div class="left">
+					<input hidden class="" id="notes-reflectL" value=0 style="width: 30px;position:relative;left:0px" type="number" min="0" max="5" step="1" title=""/>
+					<input hidden class="" id="notes-lightScreenL" value=0 style="width: 30px;position:relative;left:50px" type="number" min="0" max="5" step="1" title=""/>
+				</div>
+				<div class="right">
+					<input hidden class="" id="notes-reflectR" value=0 style="width: 30px;position:relative;left:-50px" type="number" min="0" max="5" step="1" title=""/>
+					<input hidden class="" id="notes-lightScreenR" value=0 style="width: 30px;position:relative;left:0px" type="number" min="0" max="5" step="1" title=""/>
+				</div>
 				<div class="btn-group gen-specific g7">
 						<div class="left" title="Is this Pokemon protected by Aurora Veil?">
 							<input class="btn-input calc-trigger" type="checkbox" id="auroraVeilL" /><label class="btn btn-wide" for="auroraVeilL">Aurora Veil</label>
