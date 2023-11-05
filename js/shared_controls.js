@@ -1270,14 +1270,7 @@ $("#open-level").change(function () {
 	localStorage.setItem("open-level", a);
 	openLevel = this.checked;
 	$("#leveloverride").val(openLevel ? 100 : 50);
-	$("#levelL1").val(openLevel ? 100 : 50);
-	$("#levelR1").val(openLevel ? 100 : 50);
-	
 	$("#leveloverride").change();
-	$("#levelL1").change();
-	$("#levelR1").change();
-
-
 });
 
 $("#spaceAdjuster1").change(function () {
