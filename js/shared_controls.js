@@ -1269,6 +1269,15 @@ $("#open-level").change(function () {
 	var a = this.checked;
 	localStorage.setItem("open-level", a);
 	openLevel = this.checked;
+	$("#leveloverride").val(openLevel ? 100 : 50);
+	$("#levelL1").val(openLevel ? 100 : 50);
+	$("#levelR1").val(openLevel ? 100 : 50);
+	
+	$("#leveloverride").change();
+	$("#levelL1").change();
+	$("#levelR1").change();
+
+
 });
 
 $("#spaceAdjuster1").change(function () {
@@ -1492,6 +1501,7 @@ function getSetOptions(sets) {
 		var typeHint = $("select.type-hint option:selected").val();
 		var roundHint = $("#hint1").val();
 		var phraseHint = $("#hint3").val();
+		var counts = {};
 		for (var i = 0; i < pokeNames.length; i++) {
 			var pokeName = pokeNames[i];
 			if (pokeName in setdex) {
@@ -1505,6 +1515,16 @@ function getSetOptions(sets) {
 				}
 			}
 		}
+		/*trying to figure out num of sets
+		for (let i = 0; i < setOptions.length; i++)
+		{
+			for (let j = i+1; j < setOptions.length; j++)
+			{
+				for (let k = j+1; k < setOptions.length; k++)
+				{
+				}
+			}
+		}*/
 		setOptions.sort(function (a, b) {
 
 			var p1 = (pokedex[a.pokemon].t1 == typeHint) || (pokedex[a.pokemon].t2 == typeHint);
@@ -1811,11 +1831,11 @@ function loadDefaultLists() {
 	
    // this part is responsible for setting last search when select2 is opening
 	$('.set-selector').on('select2-open', function () {
+		var elems = $(".select2-results");
+		elems.removeClass("select2-results-size-10 select2-results-size-11 select2-results-size-12 select2-results-size-13 select2-results-size-14 "+
+			"select2-results-size-15 select2-results-size-16 select2-results-size-17 select2-results-size-18 select2-results-size-19")
 		if (moveCalcHidden)
 		{
-			var elems = $(".select2-results");
-			elems.removeClass("select2-results-size-10 select2-results-size-11 select2-results-size-12 select2-results-size-13 select2-results-size-14 "+
-			"select2-results-size-15 select2-results-size-16 select2-results-size-17 select2-results-size-18 select2-results-size-19")
 			elems.addClass("select2-results-size-" + spreadsheetFont);
 		}
 		if (moveCalcHidden && searchHistory) {

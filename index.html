@@ -12,6 +12,12 @@
 
 <body>
 
+<div hidden class="schedule">
+    <fieldset style="width:350px;">
+	<div id="day1table">
+	</div>
+	</fieldset>
+</div>
 <div class="wrapper">
 
 	<div hidden id = "placeholder" style="height:300px;"></div>
@@ -1279,6 +1285,17 @@
 			</select>
 			<input title="Open level?" type="checkbox" id="open-level" />
 			<div style="position:relative;top:0px"><b>Round # + Hints</b></div>
+			<table>
+			<tbody>
+			<tr>
+					<td>
+						<div class="gen-specific g2 g3 g4 g5 g6 g7">
+							<select class="item terrain-trigger calc-trigger" id="itemL1"></select>
+						</div>
+					</td>
+			</tr>
+			</tbody>
+			</table>
 			<input type="checkbox" id="hide-move-calc" />Spreadsheet
 		</div>
 		<div class="panel">
