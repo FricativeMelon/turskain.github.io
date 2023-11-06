@@ -1393,6 +1393,10 @@ var legendPokeAll = legendPoke1.concat(legendPoke2, legendPoke3);
 
 function isPokeInRound(pokemon, set, round)
 {
+	if (round == 0)
+	{
+		return true;
+	}
 	var monNum = parseInt(set.substring(set.indexOf("[")+1, set.indexOf("]")))-1;
 	if (openLevel)
 	{
